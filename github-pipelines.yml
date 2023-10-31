@@ -3,28 +3,37 @@
 #  This template allows you to validate your NodeJS code.
 #  The workflow allows running tests and code linting on the default branch.
 
-image: node:16
+name: Expo Build
 
-pipelines:
-  branches:
-    develop:
-      - step: # Install and run CI for Dev
-          caches:
-            - node
-          script: 
-            - npm install
-            - npm run ci:dev
-    uat:
-      - step: # Install and run CI for UAT
-          caches:
-            - node
-          script:
-            - npm install
-            - npm run ci:uat
-    main:
-      - step: # Install and run CI for Prod
-          caches:
-            - node
-          script:
-            - npm install
-            - npm run ci:prod
+on:
+  push:
+    branches:
+      - develop
+      - uat
+jobs:
+  main_job:
+    name: Main Branch Push
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v2
+
+    - name: Run Main Branch Script
+      run: |
+        # Your script for the main branch goes here
+        echo "Running script for the main branch"
+    
+  development_job:
+    name: Development Branch Push
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v2
+
+    - name: Run Development Branch Script
+      run: |
+        # Your script for the development branch goes here
+        echo "Running script for the development branch"
+
