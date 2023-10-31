@@ -4,9 +4,21 @@
   "main": "node_modules/expo/AppEntry.js",
   "scripts": {
     "start": "expo start",
+    "dev": "export NODE_ENV=development && expo start --dev-client",
+    "dev-win": "set NODE_ENV=development && expo start --dev-client",
     "android": "expo start --android",
     "ios": "expo start --ios",
-    "web": "expo start --web"
+    "build:dev:android": "npx eas-cli@3.13.3 build --profile development --platform android",
+    "build:dev:ios": "npx eas-cli@3.13.3 build --profile development --platform ios",
+    "build:uat:android": "npx eas-cli@3.13.3 build --profile uat --platform android",
+    "build:uat:ios": "npx eas-cli@3.13.3 build --profile uat --platform ios",
+    "build:prod:android": "npx eas-cli@3.13.3 build --profile production --platform android",
+    "build:prod:ios": "npx eas-cli@3.13.3 build --profile production --platform ios",
+    "ci:dev": "npx eas-cli@3.13.3 build --profile development --platform all --no-wait --non-interactive",
+    "ci:uat": "npx eas-cli@3.13.3 build --profile uat --platform all --no-wait --non-interactive",
+    "ci:prod": "npx eas-cli@3.13.3 build --profile production --platform all --no-wait --non-interactive",
+    "eas-build-pre-install": "node ./scripts/pre-install.js",
+    "eas-build-on-success": "node ./scripts/post-install.js"
   },
   "dependencies": {
     "expo": "~49.0.15",

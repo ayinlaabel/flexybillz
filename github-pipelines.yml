@@ -1,0 +1,30 @@
+#  Template NodeJS build
+
+#  This template allows you to validate your NodeJS code.
+#  The workflow allows running tests and code linting on the default branch.
+
+image: node:16
+
+pipelines:
+  branches:
+    develop:
+      - step: # Install and run CI for Dev
+          caches:
+            - node
+          script: 
+            - npm install
+            - npm run ci:dev
+    uat:
+      - step: # Install and run CI for UAT
+          caches:
+            - node
+          script:
+            - npm install
+            - npm run ci:uat
+    main:
+      - step: # Install and run CI for Prod
+          caches:
+            - node
+          script:
+            - npm install
+            - npm run ci:prod

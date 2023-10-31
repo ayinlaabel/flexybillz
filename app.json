@@ -1,7 +1,7 @@
 {
   "expo": {
     "name": "flexybillz-mobile",
-    "slug": "flexybillz-mobile",
+    "slug": "flexy-billz",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
