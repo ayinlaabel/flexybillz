@@ -11,6 +11,9 @@ import { carouselItems } from "./data";
 import { CarouselItemsProps } from "./interface";
 import { colors } from "../../../utils";
 import { SoildButton } from "../../button";
+import { useNavigation } from "@react-navigation/core";
+import { StackNavigationProp } from "@react-navigation/stack";
+import { AppStackParamsList } from "../../../navigation/app-navigation/appRoutes";
 interface Props {
   item: CarouselItemsProps;
   index: any;
@@ -18,6 +21,8 @@ interface Props {
 const GetStartedCarousel = () => {
   const [index, setIndex] = React.useState(0);
   let isCarousel = React.useRef(null);
+
+  const { navigate } = useNavigation<StackNavigationProp<AppStackParamsList>>();
 
   const { width: SCREEN_WIDTH, height: SCREEN_HEIGHT } =
     Dimensions.get("window");
@@ -108,7 +113,10 @@ const GetStartedCarousel = () => {
             <Paragraph fontFamily="PoppinSemiBold">
               Already have an account?
             </Paragraph>
-            <TouchableOpacity activeOpacity={0.9} onPress={() => {}}>
+            <TouchableOpacity
+              activeOpacity={0.9}
+              onPress={() => navigate("Login")}
+            >
               <Paragraph
                 color={colors.brandColor}
                 ml="5px"

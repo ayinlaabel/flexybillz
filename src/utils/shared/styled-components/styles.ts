@@ -8,6 +8,7 @@ import {
   TextProps,
 } from "./interface";
 import colors from "../Colors";
+import { InputProp } from "../../../components/input/interface";
 
 export const Container: React.FC<ContainerProps> = styled.View`
   ${({ position }: any) => (position ? `position: ${position}` : null)};
@@ -93,6 +94,13 @@ export const InputContainer: React.FC<InputContainerProps> = styled.View`
   box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
 `;
 
+export const DefaultTextInput: React.FC<InputProp> = styled.TextInput`
+  height: ${({ height }: any) =>
+    height ? (typeof height === typeof 0 ? hp(height) : height) : "100%"};
+  width: ${({ width }: any) =>
+    width ? (typeof width === typeof 0 ? wp(width) : width) : "100%"};
+  ${({ px }: any) => (px ? `padding-right: ${px}; padding-left:${px};` : null)};
+`;
 export const ImageContainer: React.FC<ImageContainerProps> = styled.View`
   height: ${({ height }: any) => (height ? hp(height) : "100%")};
   width: ${({ width }: any) =>

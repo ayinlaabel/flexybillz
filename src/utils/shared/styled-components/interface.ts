@@ -46,8 +46,9 @@ export interface TextProps {
 }
 
 export interface InputContainerProps {
-  children: any;
-  width?: string;
+  children?: any;
+  height?: number | string;
+  width?: string | number;
   mt?: string;
   mb?: string;
   ml?: string;

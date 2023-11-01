@@ -4,3 +4,7 @@ export const getStartedImages = {
   carouselImage3: require("./carousel-image-3.png"),
   carouselImage4: require("./carousel-image-4.png"),
 };
+
+export const loginImage = {
+  carouselImage1: require("./adsBanner.png"),
+};
