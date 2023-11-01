@@ -1,0 +1,6 @@
+export const getStartedImages = {
+  carouselImage1: require("./carousel-image-1.png"),
+  carouselImage2: require("./carousel-image-2.png"),
+  carouselImage3: require("./carousel-image-3.png"),
+  carouselImage4: require("./carousel-image-4.png"),
+};
