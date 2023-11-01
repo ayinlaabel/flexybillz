@@ -29,7 +29,12 @@ const GetStartedCarousel = () => {
 
   const renderCarouselItem = ({ item }: any) => {
     return (
-      <Container px="10px" width={JSON.stringify(SCREEN_WIDTH)} items="center">
+      <Container
+        px="10px"
+        mt="40px"
+        width={JSON.stringify(SCREEN_WIDTH)}
+        items="center"
+      >
         <Container width="82%" my="30px">
           <Paragraph
             size="26px"
@@ -72,7 +77,9 @@ const GetStartedCarousel = () => {
         autoplayDelay={3000}
         autoplayInterval={3000}
         inactiveSlideShift={0}
-        onSnapToItem={(index: any) => setIndex(index)}
+        useScrollView={true}
+        removeClippedSubviews={false}
+        onBeforeSnapToItem={(index: any) => setIndex(index)}
       />
       <Container position="absolute" left="0" right="0" bottom="25">
         <Pagination
@@ -97,7 +104,9 @@ const GetStartedCarousel = () => {
           <SoildButton
             background={colors.brandColor}
             height={60}
-            onPress={() => {}}
+            onPress={() => {
+              navigate("Signup");
+            }}
             items="center"
             justify="center"
             size="18px"

@@ -11,10 +11,12 @@ import {
 } from "@react-navigation/stack";
 import GetStarted from "../../screens/get-started/GetStarted";
 import Login from "../../screens/login/Login";
+import Registration from "../../screens/register/Registration";
 
 export type AppStackParamsList = {
   GetStarted: undefined;
   Login: undefined;
+  Signup: undefined;
 };
 
 type StackNavigatorOptions<ParamList extends ParamListBase> =
@@ -59,5 +61,9 @@ export const appRoutes: AppRouteStackType = [
   {
     name: "Login",
     component: Login,
+  },
+  {
+    name: "Signup",
+    component: Registration,
   },
 ];

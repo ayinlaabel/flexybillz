@@ -1,5 +1,5 @@
-import React from "react";
-import { TouchableOpacity } from "react-native";
+import React, { useState } from "react";
+import { TouchableOpacity, StatusBar } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import { StackNavigationProp } from "@react-navigation/stack";
 import {
@@ -20,9 +20,12 @@ import { SoildButton } from "../../components/button";
 import { AppStackParamsList } from "../../navigation/app-navigation/appRoutes";
 import { SafeAreaView } from "react-native-safe-area-context";
 import LoginCarousel from "../../components/carousel/login-carousel/LoginCarousel";
+import Icon from "react-native-vector-icons/Fontisto";
 
 const Login = () => {
-  const { goBack } = useNavigation<StackNavigationProp<AppStackParamsList>>();
+  const [rememberMe, setRememberMe] = useState<boolean>();
+  const { goBack, navigate } =
+    useNavigation<StackNavigationProp<AppStackParamsList>>();
 
   const handleGoBack = () => {
     goBack();
@@ -30,7 +33,8 @@ const Login = () => {
 
   const handleChange = () => {};
   return (
-    <Container>
+    <Container background={colors.whiteColor}>
+      <StatusBar barStyle="dark-content" translucent={true} />
       <SafeAreaView />
       <Container px="20px">
         <Container height={50} justify="center">
@@ -94,6 +98,7 @@ const Login = () => {
               Password
             </Paragraph>
             <DefaultInput
+              keyboardType="numeric"
               height={50}
               rightTopRadius="5px"
               leftTopRadius="5px"
@@ -105,33 +110,51 @@ const Login = () => {
             />
           </Container>
           <Container my="15px" flexDirection="row" justify="space-between">
-            <Container flexDirection="row">
-              <Container height={20} width={20} mr="5px">
-                <ImageTag source={radioIcon} resizeMode="contain" />
+            <TouchableOpacity
+              activeOpacity={0.9}
+              onPress={() => setRememberMe(!rememberMe)}
+            >
+              <Container flexDirection="row">
+                <Container
+                  height={20}
+                  width={20}
+                  mr="5px"
+                  items="center"
+                  justify="center"
+                >
+                  <Icon
+                    name={rememberMe ? "radio-btn-active" : "radio-btn-passive"}
+                    size={15}
+                    color={colors.brandColor}
+                  />
+                </Container>
+                <Paragraph
+                  mb="5px"
+                  color={colors.brandColor}
+                  fontFamily="PoppinRegular"
+                >
+                  Remember me
+                </Paragraph>
               </Container>
-              <Paragraph
-                mb="5px"
-                color={colors.brandColor}
-                fontFamily="PoppinRegular"
-              >
-                Remember me
-              </Paragraph>
-            </Container>
+            </TouchableOpacity>
             <Container flexDirection="row">
               <Paragraph
                 mb="5px"
                 color={colors.brandColor}
                 fontFamily="PoppinRegular"
               >
-                Login with{" "}
+                Login with
               </Paragraph>
-              <Paragraph
-                mb="5px"
-                color={colors.brandColor}
-                fontFamily="PoppinSemiBold"
-              >
-                Fingerprint
-              </Paragraph>
+              <TouchableOpacity>
+                <Paragraph
+                  mb="5px"
+                  ml="3px"
+                  color={colors.brandColor}
+                  fontFamily="PoppinSemiBold"
+                >
+                  Fingerprint
+                </Paragraph>
+              </TouchableOpacity>
             </Container>
           </Container>
           <SoildButton
@@ -151,23 +174,36 @@ const Login = () => {
             Login
           </SoildButton>
           <Container my="15px" items="flex-end">
-            <Paragraph
-              mb="5px"
-              color={colors.brandColor}
-              fontFamily="PoppinRegular"
-            >
-              Forgot Password?
-            </Paragraph>
+            <TouchableOpacity activeOpacity={0.9} onPress={() => {}}>
+              <Paragraph
+                mb="5px"
+                color={colors.brandColor}
+                fontFamily="PoppinRegular"
+              >
+                Forgot Password?
+              </Paragraph>
+            </TouchableOpacity>
           </Container>
         </Container>
-        <Container items="center">
-          <Paragraph
-            mb="5px"
-            color={colors.brandColor}
-            fontFamily="PoppinRegular"
-          >
-            New to FexyBillz? Sign up now.
+        <Container flexDirection="row" justify="center" items="center">
+          <Paragraph mb="5px" fontFamily="PoppinRegular">
+            New to FexyBillz?
           </Paragraph>
+          <TouchableOpacity
+            activeOpacity={0.9}
+            onPress={() => {
+              navigate("Signup");
+            }}
+          >
+            <Paragraph
+              mb="5px"
+              ml="3px"
+              color={colors.brandColor}
+              fontFamily="PoppinSemiBold"
+            >
+              Sign up now.
+            </Paragraph>
+          </TouchableOpacity>
         </Container>
       </Container>
       <Container width="100%">
