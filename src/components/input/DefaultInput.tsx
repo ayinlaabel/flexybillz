@@ -29,6 +29,7 @@ const DefaultInput = ({
   background = colors.grayColor,
   keyboardType,
   inputType,
+  countryCode = "+234",
 }: InputProp) => {
   const [text, setText] = useState("Show");
   const [secure, setSecure] = useState<boolean>(
@@ -69,13 +70,33 @@ const DefaultInput = ({
       mr={mr}
       mt={mt}
       mb={mb}
-      flexDirection={inputType === InputType.PASSWORD ? "row" : "column"}
+      flexDirection={
+        inputType === InputType.PASSWORD || InputType.PHONE ? "row" : "column"
+      }
     >
+      {inputType === InputType.PHONE && (
+        <Container
+          height="100%"
+          width={"30%"}
+          py="10px"
+          pl="10px"
+          justify="center"
+        >
+          <Container
+            items="center"
+            justify="center"
+            borderRight="1px"
+            borderColor={colors.blackColor}
+          >
+            <Paragraph size="14px">{countryCode}</Paragraph>
+          </Container>
+        </Container>
+      )}
       <DefaultTextInput
         width={inputType === InputType.PASSWORD ? "85%" : "100%"}
         secureTextEntry={secure}
         keyboardType={keyboardType}
-        px={px}
+        px={inputType === InputType.PHONE ? "5px" : px}
         fontFamily={fontFamily}
         placeholder={placeholder}
         onChange={onChange}

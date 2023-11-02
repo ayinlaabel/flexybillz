@@ -4,6 +4,7 @@ export enum InputType {
   PASSWORD = "password",
   TEXT = "text",
   EMAIL = "email",
+  PHONE = "phone",
 }
 export interface InputProp extends InputContainerProps {
   size?: string;
@@ -17,5 +18,6 @@ export interface InputProp extends InputContainerProps {
   keyboardType?: string;
   inputType?: string;
   secureTextEntry?: boolean;
+  countryCode?: string;
   onChange: (props: any) => any;
 }

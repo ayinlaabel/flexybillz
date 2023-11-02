@@ -1,4 +1,5 @@
 import styled from "styled-components/native";
+import { StyleSheet } from "react-native";
 import { hp, wp } from "../responsive-dimension";
 import React from "react";
 import {
@@ -22,7 +23,11 @@ export const Container: React.FC<ContainerProps> = styled.View`
     width ? (typeof width === typeof 0 ? wp(width) : width) : "auto"};
   background: ${({ background }: any) =>
     background ? background : "transparent"};
-  border-width: ${({ border }: any) => (border ? border : "0px")};
+  ${({ border }: any) => (border ? `border-width: ${border};` : null)};
+  ${({ borderRight }: any) =>
+    borderRight ? `border-right-width: ${borderRight};` : null};
+  ${({ borderLeft }: any) =>
+    borderLeft ? `border-left-width:${borderLeft};` : null};
   border-color: ${({ borderColor }: any) =>
     borderColor ? borderColor : "transparent"};
   ${({ borderRadius }: any) =>
@@ -124,3 +129,15 @@ export const ImageTag = styled.Image`
   width: 100%;
   height: 100%;
 `;
+
+export const styles = StyleSheet.create({
+  dropDownContainer: {
+    height: hp(50),
+    backgroundColor: colors.grayColor,
+    borderRadius: 5,
+    paddingHorizontal: 10,
+  },
+  placeholder: {
+    color: colors.lightGrayColor,
+  },
+});

@@ -22,6 +22,10 @@ import { ScrollView } from "react-native-gesture-handler";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { InputType } from "../../components/input/interface";
 import Icon from "react-native-vector-icons/Fontisto";
+import { Dropdown } from "react-native-element-dropdown";
+import { countries } from "../../constants";
+import { styles } from "../../utils/shared/styled-components/styles";
+import genders from "../../constants/data/genders";
 
 const Registration = () => {
   const [accepted, setAccepted] = useState<boolean>(false);
@@ -30,6 +34,22 @@ const Registration = () => {
     goBack();
   };
   const handleChange = () => {};
+
+  const renderCountries = (item: any) => {
+    return (
+      <Container height={50} px="15px" justify="center">
+        <Paragraph>{item.name}</Paragraph>
+      </Container>
+    );
+  };
+
+  const renderGender = (item: any) => {
+    return (
+      <Container height={50} px="15px" justify="center">
+        <Paragraph>{item.name}</Paragraph>
+      </Container>
+    );
+  };
   return (
     <Container background={colors.whiteColor}>
       <StatusBar barStyle="dark-content" translucent={true} />
@@ -157,17 +177,17 @@ const Registration = () => {
                   color={colors.brandColor}
                   fontFamily="PoppinRegular"
                 >
-                  Phone Number
+                  Gender
                 </Paragraph>
-                <DefaultInput
-                  height={50}
-                  rightTopRadius="5px"
-                  leftTopRadius="5px"
-                  rightBottomRadius="5px"
-                  leftBottomRadius="5px"
-                  px="15px"
+                <Dropdown
+                  style={styles.dropDownContainer}
+                  data={genders}
+                  labelField="name"
+                  valueField="value"
+                  placeholder="Select Gender"
+                  placeholderStyle={styles.placeholder}
+                  renderItem={renderGender}
                   onChange={handleChange}
-                  placeholder="+234 81 234 5678"
                 />
               </Container>
             </Container>
@@ -178,17 +198,16 @@ const Registration = () => {
                   color={colors.brandColor}
                   fontFamily="PoppinRegular"
                 >
-                  Gender
+                  Select Country
                 </Paragraph>
-                <DefaultInput
-                  height={50}
-                  rightTopRadius="5px"
-                  leftTopRadius="5px"
-                  rightBottomRadius="5px"
-                  leftBottomRadius="5px"
-                  px="15px"
+                <Dropdown
+                  style={styles.dropDownContainer}
+                  data={countries}
                   onChange={handleChange}
-                  placeholder="Male"
+                  placeholderStyle={styles.placeholder}
+                  labelField="name"
+                  valueField="name"
+                  renderItem={renderCountries}
                 />
               </Container>
               <Container my="10px" width="48%">
@@ -197,9 +216,10 @@ const Registration = () => {
                   color={colors.brandColor}
                   fontFamily="PoppinRegular"
                 >
-                  Select Country
+                  Phone Number
                 </Paragraph>
                 <DefaultInput
+                  inputType="phone"
                   height={50}
                   rightTopRadius="5px"
                   leftTopRadius="5px"
@@ -207,7 +227,7 @@ const Registration = () => {
                   leftBottomRadius="5px"
                   px="15px"
                   onChange={handleChange}
-                  placeholder="Nigeria"
+                  placeholder="81 234 5678"
                 />
               </Container>
             </Container>

@@ -22,6 +22,8 @@ export interface ContainerProps {
   pr?: string;
   pl?: string;
   border?: string;
+  borderRight?: string;
+  borderLeft?: string;
   borderColor?: string;
   position?: string;
   borderRadius?: string;
