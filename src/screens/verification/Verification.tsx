@@ -17,7 +17,8 @@ import Icon from "react-native-vector-icons/FontAwesome";
 import OtpInput from "../../components/input/OTPInput";
 
 const Verification = () => {
-  const { goBack } = useNavigation<StackNavigationProp<AppStackParamsList>>();
+  const { navigate, goBack } =
+    useNavigation<StackNavigationProp<AppStackParamsList>>();
   const handleGoBack = () => {
     goBack();
   };
@@ -67,7 +68,10 @@ const Verification = () => {
             <Container>
               <Paragraph>Didn’t get verification code?</Paragraph>
             </Container>
-            <TouchableOpacity activeOpacity={0.9}>
+            <TouchableOpacity
+              activeOpacity={0.9}
+              onPress={() => navigate("SecurePin")}
+            >
               <Container
                 mt="5px"
                 flexDirection="row"

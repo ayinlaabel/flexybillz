@@ -32,6 +32,7 @@ export interface ContainerProps {
   right?: string;
   left?: string;
   gap?: string;
+  wrap?: string;
   children?: any;
 }
 

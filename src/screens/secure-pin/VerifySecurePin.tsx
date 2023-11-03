@@ -1,4 +1,7 @@
 import React, { useState } from "react";
+import { StackNavigationProp } from "@react-navigation/stack";
+import { AppStackParamsList } from "../../navigation/app-navigation/appRoutes";
+import { useNavigation } from "@react-navigation/core";
 import { Dimensions, ScrollView, TouchableOpacity } from "react-native";
 import {
   Container,
@@ -8,13 +11,10 @@ import {
 import { colors } from "../../utils";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { backIcon } from "../../assets/icons";
-import { StackNavigationProp } from "@react-navigation/stack";
-import { AppStackParamsList } from "../../navigation/app-navigation/appRoutes";
-import { useNavigation } from "@react-navigation/core";
 import StaticKeyboard from "../../components/keyboard/Keyboard";
 import { SoildButton } from "../../components/button";
 
-const SecurePin = () => {
+const VerifySecurePin = () => {
   const [pin, setPin] = useState<string[]>([]);
   const { height: SCREEN_HEIGHT } = Dimensions.get("window");
   const { navigate, goBack } =
@@ -22,9 +22,7 @@ const SecurePin = () => {
   const handleGoBack = () => {
     goBack();
   };
-  const handleSubmit = () => {
-    navigate("VerifySecurePin");
-  };
+  const handleSubmit = () => {};
 
   const handleKeyboard = (values: string) => {
     console.log(values);
@@ -66,7 +64,7 @@ const SecurePin = () => {
             fontFamily="PoppinMedium"
             mb="10px"
           >
-            Secure Pin
+            Verify You Pin
           </Paragraph>
           <Container width="75%">
             <Paragraph
@@ -77,14 +75,10 @@ const SecurePin = () => {
               mb="5px"
               mt="30px"
             >
-              Create your secured pin
+              Verify your secured pin
             </Paragraph>
             <Paragraph textAlign="center">
-              You will need this pin to process transactions on
-              <Paragraph color={colors.brandColor} fontFamily="PoppinBold">
-                {" "}
-                FlexyBillz
-              </Paragraph>
+              Re-enter your pin for confirmation
             </Paragraph>
           </Container>
           <Container mt="30px">
@@ -171,4 +165,4 @@ const SecurePin = () => {
   );
 };
 
-export default SecurePin;
+export default VerifySecurePin;

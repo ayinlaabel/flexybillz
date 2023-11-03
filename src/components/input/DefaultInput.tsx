@@ -45,13 +45,11 @@ const DefaultInput = ({
         setText("Show");
         setSecure(true);
         inputType = InputType.TEXT;
-        console.log(secure);
         break;
       case InputType.TEXT:
         setText("Hide");
         setSecure(false);
         inputType = InputType.PASSWORD;
-        console.log(secure);
         break;
       default:
         setSecure(false);

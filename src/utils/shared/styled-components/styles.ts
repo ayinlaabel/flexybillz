@@ -61,6 +61,7 @@ export const Container: React.FC<ContainerProps> = styled.View`
 
   overflow: hidden;
   ${({ gap }: any) => (gap ? `gap: ${gap};` : null)}
+  ${({ wrap }: any) => (wrap ? `flex-wrap: ${wrap};` : null)}
 `;
 
 export const Paragraph: React.FC<TextProps> = styled.Text`
@@ -107,7 +108,7 @@ export const DefaultTextInput: React.FC<InputProp> = styled.TextInput`
   width: ${({ width }: any) =>
     width ? (typeof width === typeof 0 ? wp(width) : width) : "100%"};
   ${({ px }: any) => (px ? `padding-right: ${px}; padding-left:${px};` : null)};
-  ${({ textAlign }: any) => (textAlign ? `text-align: ${textAlign}` : null)}
+  ${({ textAlign }: any) => (textAlign ? `text-align: ${textAlign}` : null)};
 `;
 export const ImageContainer: React.FC<ImageContainerProps> = styled.View`
   height: ${({ height }: any) => (height ? hp(height) : "100%")};

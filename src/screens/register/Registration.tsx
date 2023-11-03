@@ -55,7 +55,8 @@ const Registration = () => {
     );
   };
   return (
-    <Container background={colors.whiteColor}>
+    <>
+      {/* <Container background={colors.whiteColor}> */}
       <StatusBar barStyle="dark-content" translucent={true} />
       <SafeAreaView />
       <Container
@@ -70,8 +71,14 @@ const Registration = () => {
           </Container>
         </TouchableOpacity>
       </Container>
-      <ScrollView>
-        <Container mt="20px" px="15px" mb="20px">
+      <ScrollView contentContainerStyle={{ flexGrow: 1 }}>
+        <Container
+          pt="20px"
+          pr="15px"
+          pl="15px"
+          pb="20px"
+          background={colors.whiteColor}
+        >
           <Container height="100%" px="15px">
             <Container
               flexDirection="row"
@@ -329,10 +336,27 @@ const Registration = () => {
             >
               Register
             </SoildButton>
+            <Container
+              flexDirection="row"
+              items="center"
+              justify="center"
+              py="10px"
+            >
+              <Paragraph>Already have an account? </Paragraph>
+              <TouchableOpacity
+                activeOpacity={0.9}
+                onPress={() => navigate("Login")}
+              >
+                <Paragraph color={colors.brandColor} fontFamily="PoppinMedium">
+                  Login
+                </Paragraph>
+              </TouchableOpacity>
+            </Container>
           </Container>
         </Container>
       </ScrollView>
-    </Container>
+      {/* </Container> */}
+    </>
   );
 };
 

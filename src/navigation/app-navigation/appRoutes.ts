@@ -13,12 +13,16 @@ import GetStarted from "../../screens/get-started/GetStarted";
 import Login from "../../screens/login/Login";
 import Registration from "../../screens/register/Registration";
 import Verification from "../../screens/verification/Verification";
+import SecurePin from "../../screens/secure-pin/SecurePin";
+import VerifySecurePin from "../../screens/secure-pin/VerifySecurePin";
 
 export type AppStackParamsList = {
   GetStarted: undefined;
   Login: undefined;
   Signup: undefined;
   Verification: undefined;
+  SecurePin: undefined;
+  VerifySecurePin: undefined;
 };
 
 type StackNavigatorOptions<ParamList extends ParamListBase> =
@@ -71,5 +75,13 @@ export const appRoutes: AppRouteStackType = [
   {
     name: "Verification",
     component: Verification,
+  },
+  {
+    name: "SecurePin",
+    component: SecurePin,
+  },
+  {
+    name: "VerifySecurePin",
+    component: VerifySecurePin,
   },
 ];
