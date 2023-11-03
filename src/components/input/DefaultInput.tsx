@@ -13,11 +13,13 @@ const DefaultInput = ({
   height,
   placeholder,
   onChange,
+  onChangeText,
   px,
   ml,
   mr,
   mt,
   mb,
+  textAlign,
   fontFamily,
   border,
   borderColor,
@@ -30,6 +32,8 @@ const DefaultInput = ({
   keyboardType,
   inputType,
   countryCode = "+234",
+  maxLength,
+  ref,
 }: InputProp) => {
   const [text, setText] = useState("Show");
   const [secure, setSecure] = useState<boolean>(
@@ -93,6 +97,7 @@ const DefaultInput = ({
         </Container>
       )}
       <DefaultTextInput
+        textAlign={textAlign}
         width={inputType === InputType.PASSWORD ? "85%" : "100%"}
         secureTextEntry={secure}
         keyboardType={keyboardType}
@@ -100,6 +105,9 @@ const DefaultInput = ({
         fontFamily={fontFamily}
         placeholder={placeholder}
         onChange={onChange}
+        onChangeText={onChangeText}
+        maxLength={maxLength}
+        ref={ref}
       />
       {inputType === InputType.PASSWORD && (
         <Container height="100%" width={"15%"}>

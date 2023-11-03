@@ -12,11 +12,13 @@ import {
 import GetStarted from "../../screens/get-started/GetStarted";
 import Login from "../../screens/login/Login";
 import Registration from "../../screens/register/Registration";
+import Verification from "../../screens/verification/Verification";
 
 export type AppStackParamsList = {
   GetStarted: undefined;
   Login: undefined;
   Signup: undefined;
+  Verification: undefined;
 };
 
 type StackNavigatorOptions<ParamList extends ParamListBase> =
@@ -65,5 +67,9 @@ export const appRoutes: AppRouteStackType = [
   {
     name: "Signup",
     component: Registration,
+  },
+  {
+    name: "Verification",
+    component: Verification,
   },
 ];

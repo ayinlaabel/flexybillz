@@ -31,6 +31,7 @@ export interface ContainerProps {
   bottom?: string;
   right?: string;
   left?: string;
+  gap?: string;
   children?: any;
 }
 
@@ -47,8 +48,7 @@ export interface TextProps {
   fontFamily?: string;
 }
 
-export interface InputContainerProps {
-  children?: any;
+export interface InputContainerProps extends AddChildren {
   height?: number | string;
   width?: string | number;
   mt?: string;
@@ -60,6 +60,10 @@ export interface InputContainerProps {
   borderColor?: string;
   borderRadius?: string;
   shadow?: Boolean;
+}
+
+interface AddChildren {
+  children?: React.ReactNode | undefined;
 }
 
 export interface ImageContainerProps {

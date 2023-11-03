@@ -29,11 +29,15 @@ import genders from "../../constants/data/genders";
 
 const Registration = () => {
   const [accepted, setAccepted] = useState<boolean>(false);
-  const { goBack } = useNavigation<StackNavigationProp<AppStackParamsList>>();
+  const { navigate, goBack } =
+    useNavigation<StackNavigationProp<AppStackParamsList>>();
   const handleGoBack = () => {
     goBack();
   };
   const handleChange = () => {};
+  const handleSubmit = () => {
+    navigate("Verification");
+  };
 
   const renderCountries = (item: any) => {
     return (
@@ -315,7 +319,7 @@ const Registration = () => {
               rightTopRadius="15px"
               leftBottomRadius="15px"
               leftTopRadius="15px"
-              onPress={() => {}}
+              onPress={handleSubmit}
               items="center"
               justify="center"
               size="17px"
