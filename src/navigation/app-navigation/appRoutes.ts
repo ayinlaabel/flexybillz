@@ -15,6 +15,8 @@ import Registration from "../../screens/register/Registration";
 import Verification from "../../screens/verification/Verification";
 import SecurePin from "../../screens/secure-pin/SecurePin";
 import VerifySecurePin from "../../screens/secure-pin/VerifySecurePin";
+import FingerPrintSetup from "../../screens/finger-print/FingerPrintSetup";
+import LoginWithPin from "../../screens/login/LoginWithPin";
 
 export type AppStackParamsList = {
   GetStarted: undefined;
@@ -23,6 +25,8 @@ export type AppStackParamsList = {
   Verification: undefined;
   SecurePin: undefined;
   VerifySecurePin: undefined;
+  FingerPrintSetup: undefined;
+  LoginWithPin: undefined;
 };
 
 type StackNavigatorOptions<ParamList extends ParamListBase> =
@@ -33,7 +37,7 @@ type StackNavigatorOptions<ParamList extends ParamListBase> =
     StackNavigationEventMap
   >;
 
-type StackRouteType<ParamList extends ParamListBase> = Array<
+export type StackRouteType<ParamList extends ParamListBase> = Array<
   RouteConfig<
     ParamList,
     keyof ParamList,
@@ -83,5 +87,13 @@ export const appRoutes: AppRouteStackType = [
   {
     name: "VerifySecurePin",
     component: VerifySecurePin,
+  },
+  {
+    name: "FingerPrintSetup",
+    component: FingerPrintSetup,
+  },
+  {
+    name: "LoginWithPin",
+    component: LoginWithPin,
   },
 ];

@@ -9,6 +9,7 @@ export interface ContainerProps {
   flexDirection?: string;
   items?: string;
   justify?: string;
+  flex?: number;
   mx?: string;
   my?: string;
   mt?: string;

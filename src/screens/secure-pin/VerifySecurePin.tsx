@@ -22,7 +22,9 @@ const VerifySecurePin = () => {
   const handleGoBack = () => {
     goBack();
   };
-  const handleSubmit = () => {};
+  const handleSubmit = () => {
+    navigate("FingerPrintSetup");
+  };
 
   const handleKeyboard = (values: string) => {
     console.log(values);

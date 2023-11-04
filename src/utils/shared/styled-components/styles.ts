@@ -12,6 +12,7 @@ import colors from "../Colors";
 import { InputProp } from "../../../components/input/interface";
 
 export const Container: React.FC<ContainerProps> = styled.View`
+  ${({ flex }: any) => (flex ? `flex: ${flex}` : null)};
   ${({ position }: any) => (position ? `position: ${position}` : null)};
   ${({ top }: any) => (top ? `top: ${top}` : null)};
   ${({ bottom }: any) => (bottom ? `bottom: ${bottom}` : null)};
