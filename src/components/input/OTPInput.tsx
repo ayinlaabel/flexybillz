@@ -42,7 +42,7 @@ const OtpInput = ({
     if (text.length === 1 && index === inputRefs.current.length - 1) {
       const newInputList = [...inputLength];
       newInputList[index] = text;
-      onChange(newInputList);
+      onChange(newInputList.join(""));
     }
 
     if (text.length < 1 && index > 0) {

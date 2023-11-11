@@ -1,7 +1,8 @@
 import React from "react";
-import { TouchableOpacity } from "react-native";
+import { TouchableOpacity, ActivityIndicator } from "react-native";
 import { Container, Paragraph } from "../../../utils/shared/styled-components";
 import { ButtonProps } from "../interface";
+import { colors } from "../../../utils";
 const SoildButton = ({
   children,
   mt,
@@ -35,6 +36,7 @@ const SoildButton = ({
   leftTopRadius,
   position,
   fontFamily,
+  isLoading,
   onPress,
   size,
   borderRadius,
@@ -71,14 +73,18 @@ const SoildButton = ({
         leftTopRadius={leftTopRadius}
         borderRadius={borderRadius}
       >
-        <Paragraph
-          size={size}
-          fontFamily={fontFamily}
-          color={color}
-          textAlign={textAlign}
-        >
-          {children}
-        </Paragraph>
+        {isLoading ? (
+          <ActivityIndicator size={20} color={colors.whiteColor} />
+        ) : (
+          <Paragraph
+            size={size}
+            fontFamily={fontFamily}
+            color={color}
+            textAlign={textAlign}
+          >
+            {children}
+          </Paragraph>
+        )}
       </Container>
     </TouchableOpacity>
   );

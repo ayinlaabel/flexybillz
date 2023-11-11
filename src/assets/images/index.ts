@@ -8,3 +8,9 @@ export const getStartedImages = {
 export const loginImage = {
   carouselImage1: require("./adsBanner.png"),
 };
+
+export const images = {
+  avatar: require("./avatar.jpg"),
+  banner: require("./ad2.png"),
+  verifyImage: require("./verifyImage.png"),
+};

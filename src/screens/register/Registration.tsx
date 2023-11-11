@@ -9,7 +9,7 @@ import {
   Paragraph,
 } from "../../utils/shared/styled-components";
 import { SoildButton } from "../../components/button";
-import { colors } from "../../utils";
+import { colors, storeData } from "../../utils";
 import {
   arrowDownIcon,
   backIcon,
@@ -26,18 +26,57 @@ import { Dropdown } from "react-native-element-dropdown";
 import { countries } from "../../constants";
 import { styles } from "../../utils/shared/styled-components/styles";
 import genders from "../../constants/data/genders";
+import { useFormik } from "formik";
+import { registerForm } from "./interface";
+import { sendOtpEmail, userRegistration } from "../../networking/getQuery";
+import { useQuery, useMutation } from "@tanstack/react-query";
+import axios from "axios";
+import { registrationSchema } from "../../schema";
+import { useDispatch } from "react-redux";
+import { setEmail, setPhoneNumber, setUsername } from "../../redux";
+import { appStateType } from "../../constants/app-state/appState";
+import { useToast } from "react-native-toast-notifications";
 
 const Registration = () => {
   const [accepted, setAccepted] = useState<boolean>(false);
+  const [isLoading, setIsLoading] = useState<boolean>(false);
+
+  const dispatch = useDispatch();
+
   const { navigate, goBack } =
     useNavigation<StackNavigationProp<AppStackParamsList>>();
+
+  const toast = useToast();
+
   const handleGoBack = () => {
     goBack();
   };
-  const handleChange = () => {};
-  const handleSubmit = () => {
-    navigate("Verification");
-  };
+
+  const formik = useFormik({
+    initialValues: registerForm,
+    validationSchema: registrationSchema,
+    onSubmit: async (values) => {
+      setIsLoading(true);
+      const { data } = await userRegistration(values);
+
+      if (!data.success) {
+        setIsLoading(false);
+        toast.show("Something went wrong!", { type: "custom_danger" });
+      } else {
+        setIsLoading(false);
+
+        dispatch(setEmail(values.email));
+        dispatch(setUsername(values.userName));
+        dispatch(setPhoneNumber(values.phoneNumber));
+        await storeData(appStateType.isRegistered, "true");
+        await storeData("email", values.email);
+        await storeData("username", values.userName);
+        await storeData("phoneNumber", values.phoneNumber);
+        toast.show("Registeration was successful", { type: "custom_success" });
+        navigate("SelectVerificationMode");
+      }
+    },
+  });
 
   const renderCountries = (item: any) => {
     return (
@@ -119,9 +158,15 @@ const Registration = () => {
                   rightBottomRadius="5px"
                   leftBottomRadius="5px"
                   px="15px"
-                  onChange={handleChange}
+                  value={formik.values.firstName}
+                  onChangeText={formik.handleChange("firstName")}
                   placeholder="John"
                 />
+                {formik.errors.firstName && formik.touched.firstName && (
+                  <Paragraph size="12px" color={"red"}>
+                    {formik.errors.firstName}
+                  </Paragraph>
+                )}
               </Container>
               <Container my="10px" width="48%">
                 <Paragraph
@@ -138,9 +183,14 @@ const Registration = () => {
                   rightBottomRadius="5px"
                   leftBottomRadius="5px"
                   px="15px"
-                  onChange={handleChange}
+                  onChangeText={formik.handleChange("lastName")}
                   placeholder="Doe"
                 />
+                {formik.errors.lastName && formik.touched.lastName && (
+                  <Paragraph size="12px" color={"red"}>
+                    {formik.errors.lastName}
+                  </Paragraph>
+                )}
               </Container>
             </Container>
             <Container my="10px">
@@ -158,9 +208,14 @@ const Registration = () => {
                 rightBottomRadius="5px"
                 leftBottomRadius="5px"
                 px="15px"
-                onChange={handleChange}
+                onChangeText={formik.handleChange("email")}
                 placeholder="johndoe@example.com"
               />
+              {formik.errors.email && formik.touched.email && (
+                <Paragraph size="12px" color={"red"}>
+                  {formik.errors.email}
+                </Paragraph>
+              )}
             </Container>
             <Container flexDirection="row" width="100%" justify="space-between">
               <Container my="10px" width="48%">
@@ -178,9 +233,14 @@ const Registration = () => {
                   rightBottomRadius="5px"
                   leftBottomRadius="5px"
                   px="15px"
-                  onChange={handleChange}
+                  onChangeText={formik.handleChange("userName")}
                   placeholder="johndoe"
                 />
+                {formik.errors.userName && formik.touched.userName && (
+                  <Paragraph size="12px" color={"red"}>
+                    {formik.errors.userName}
+                  </Paragraph>
+                )}
               </Container>
               <Container my="10px" width="48%">
                 <Paragraph
@@ -198,8 +258,15 @@ const Registration = () => {
                   placeholder="Select Gender"
                   placeholderStyle={styles.placeholder}
                   renderItem={renderGender}
-                  onChange={handleChange}
+                  onChange={(e) => {
+                    formik.values.gender = e.value;
+                  }}
                 />
+                {formik.errors.gender && formik.touched.firstName && (
+                  <Paragraph size="12px" color={"red"}>
+                    {formik.errors.gender}
+                  </Paragraph>
+                )}
               </Container>
             </Container>
             <Container flexDirection="row" width="100%" justify="space-between">
@@ -214,12 +281,19 @@ const Registration = () => {
                 <Dropdown
                   style={styles.dropDownContainer}
                   data={countries}
-                  onChange={handleChange}
+                  onChange={(e) => {
+                    formik.values.country = e.name;
+                  }}
                   placeholderStyle={styles.placeholder}
                   labelField="name"
                   valueField="name"
                   renderItem={renderCountries}
                 />
+                {formik.errors.country && formik.touched.country && (
+                  <Paragraph size="12px" color={"red"}>
+                    {formik.errors.country}
+                  </Paragraph>
+                )}
               </Container>
               <Container my="10px" width="48%">
                 <Paragraph
@@ -237,9 +311,14 @@ const Registration = () => {
                   rightBottomRadius="5px"
                   leftBottomRadius="5px"
                   px="15px"
-                  onChange={handleChange}
+                  onChangeText={formik.handleChange("phoneNumber")}
                   placeholder="81 234 5678"
                 />
+                {formik.errors.phoneNumber && formik.touched.phoneNumber && (
+                  <Paragraph size="12px" color={"red"}>
+                    {formik.errors.phoneNumber}
+                  </Paragraph>
+                )}
               </Container>
             </Container>
             <Container>
@@ -259,9 +338,14 @@ const Registration = () => {
                   rightBottomRadius="5px"
                   leftBottomRadius="5px"
                   px="15px"
-                  onChange={handleChange}
+                  onChangeText={formik.handleChange("password")}
                   placeholder="password"
                 />
+                {formik.errors.password && formik.touched.password && (
+                  <Paragraph size="12px" color={"red"}>
+                    {formik.errors.password}
+                  </Paragraph>
+                )}
               </Container>
               <Container my="10px">
                 <Paragraph
@@ -279,9 +363,15 @@ const Registration = () => {
                   rightBottomRadius="5px"
                   leftBottomRadius="5px"
                   px="15px"
-                  onChange={handleChange}
+                  onChangeText={formik.handleChange("confirmPassword")}
                   placeholder="confirm password"
                 />
+                {formik.errors.confirmPassword &&
+                  formik.touched.confirmPassword && (
+                    <Paragraph size="12px" color={"red"}>
+                      {formik.errors.confirmPassword}
+                    </Paragraph>
+                  )}
               </Container>
             </Container>
             <Container my="15px" flexDirection="row" justify="space-between">
@@ -326,13 +416,14 @@ const Registration = () => {
               rightTopRadius="15px"
               leftBottomRadius="15px"
               leftTopRadius="15px"
-              onPress={handleSubmit}
+              onPress={formik.handleSubmit}
               items="center"
               justify="center"
               size="17px"
               color={colors.whiteColor}
               background={colors.brandColor}
               fontFamily="PoppinSemiBold"
+              isLoading={isLoading}
             >
               Register
             </SoildButton>

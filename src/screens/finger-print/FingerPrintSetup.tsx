@@ -9,11 +9,18 @@ import { colors } from "../../utils";
 import { backIcon, fingerPrintIcon } from "../../assets/icons";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { SoildButton } from "../../components/button";
+import { useNavigation } from "@react-navigation/core";
+import { StackNavigationProp } from "@react-navigation/stack";
+import { AppStackParamsList } from "../../navigation/app-navigation/appRoutes";
 
 const FingerPrintSetup = () => {
+  const { navigate, goBack } =
+    useNavigation<StackNavigationProp<AppStackParamsList>>();
   const { height: SCREEN_HEIGHT } = Dimensions.get("window");
 
-  const handleGoBack = () => {};
+  const handleGoBack = () => {
+    goBack();
+  };
   const handleSubmit = () => {};
   return (
     <Container
@@ -104,7 +111,10 @@ const FingerPrintSetup = () => {
             </SoildButton>
           </Container>
           <Container py="10px" items="center">
-            <TouchableOpacity>
+            <TouchableOpacity
+              activeOpacity={0.9}
+              onPress={() => navigate("Dashboard")}
+            >
               <Paragraph color={colors.brandColor}>Skip for now</Paragraph>
             </TouchableOpacity>
           </Container>

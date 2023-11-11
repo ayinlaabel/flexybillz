@@ -10,20 +10,26 @@ import { SafeAreaView } from "react-native-safe-area-context";
 import { backIcon } from "../../assets/icons";
 import { StackNavigationProp } from "@react-navigation/stack";
 import { AppStackParamsList } from "../../navigation/app-navigation/appRoutes";
-import { useNavigation } from "@react-navigation/core";
+import { useNavigation, useRoute } from "@react-navigation/core";
 import StaticKeyboard from "../../components/keyboard/Keyboard";
 import { SoildButton } from "../../components/button";
 
 const SecurePin = () => {
   const [pin, setPin] = useState<string[]>([]);
+
   const { height: SCREEN_HEIGHT } = Dimensions.get("window");
+
   const { navigate, goBack } =
     useNavigation<StackNavigationProp<AppStackParamsList>>();
+
   const handleGoBack = () => {
     goBack();
   };
+
   const handleSubmit = () => {
-    navigate("VerifySecurePin");
+    if (pin.length === 4) {
+      navigate("VerifySecurePin", { securePin: pin.join("") });
+    }
   };
 
   const handleKeyboard = (values: string) => {
@@ -31,6 +37,8 @@ const SecurePin = () => {
     if (pin.length < 4) {
       setPin([...pin, values]);
     }
+
+    console.log(pin);
   };
   const handleDelete = () => {
     let newPin = pin;
@@ -146,6 +154,7 @@ const SecurePin = () => {
           <StaticKeyboard
             sendValues={handleKeyboard}
             handleDelete={handleDelete}
+            mt="30px"
           />
           <Container width={"100%"} px="20px">
             <SoildButton

@@ -17,6 +17,9 @@ import SecurePin from "../../screens/secure-pin/SecurePin";
 import VerifySecurePin from "../../screens/secure-pin/VerifySecurePin";
 import FingerPrintSetup from "../../screens/finger-print/FingerPrintSetup";
 import LoginWithPin from "../../screens/login/LoginWithPin";
+import Dashboard from "../../screens/dashboard/Dashboard";
+import SelectVerificationMode from "../../screens/verification/SelectVerificationMode";
+import AuthNavigation from "../auth-navigation/AuthNavigation";
 
 export type AppStackParamsList = {
   GetStarted: undefined;
@@ -24,9 +27,11 @@ export type AppStackParamsList = {
   Signup: undefined;
   Verification: undefined;
   SecurePin: undefined;
-  VerifySecurePin: undefined;
+  VerifySecurePin: { securePin: string };
   FingerPrintSetup: undefined;
   LoginWithPin: undefined;
+  Dashboard: undefined;
+  SelectVerificationMode: undefined;
 };
 
 type StackNavigatorOptions<ParamList extends ParamListBase> =
@@ -53,7 +58,6 @@ export const appStackNavigatiorProps: Omit<
   StackNavigatorOptions<AppStackParamsList>,
   "children"
 > = {
-  initialRouteName: "GetStarted",
   screenOptions: {
     headerShown: false,
     cardOverlayEnabled: true,
@@ -95,5 +99,13 @@ export const appRoutes: AppRouteStackType = [
   {
     name: "LoginWithPin",
     component: LoginWithPin,
+  },
+  {
+    name: "Dashboard",
+    component: AuthNavigation,
+  },
+  {
+    name: "SelectVerificationMode",
+    component: SelectVerificationMode,
   },
 ];

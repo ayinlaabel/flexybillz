@@ -61,8 +61,16 @@ export const Container: React.FC<ContainerProps> = styled.View`
     leftBottomRadius ? `border-bottom-left-radius: ${leftBottomRadius}` : null};
 
   overflow: hidden;
-  ${({ gap }: any) => (gap ? `gap: ${gap};` : null)}
-  ${({ wrap }: any) => (wrap ? `flex-wrap: ${wrap};` : null)}
+  ${({ gap }: any) => (gap ? `gap: ${gap};` : null)};
+  ${({ wrap }: any) => (wrap ? `flex-wrap: ${wrap};` : null)};
+  ${({ shadow }: any) =>
+    shadow
+      ? `shadow-color: #000000;
+      shadow-offset: 0px 3px;
+      shadow-opacity: 0.17;
+      shadow-radius: 3.05px;
+      elevation: 4;`
+      : null};
 `;
 
 export const Paragraph: React.FC<TextProps> = styled.Text`
@@ -76,6 +84,8 @@ export const Paragraph: React.FC<TextProps> = styled.Text`
   margin-left: ${({ ml }) => (ml ? ml : "0px")};
   font-family: ${({ fontFamily }) =>
     fontFamily ? fontFamily : "PoppinRegular"};
+  ${({ lineHeight }: any) =>
+    lineHeight ? `line-height: ${lineHeight};` : null}
 `;
 
 export const InputContainer: React.FC<InputContainerProps> = styled.View`

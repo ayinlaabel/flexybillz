@@ -34,6 +34,7 @@ export interface ContainerProps {
   left?: string;
   gap?: string;
   wrap?: string;
+  shadow?: boolean;
   children?: any;
 }
 
@@ -48,6 +49,7 @@ export interface TextProps {
   ml?: string;
   mr?: string;
   fontFamily?: string;
+  lineHeight?: string;
 }
 
 export interface InputContainerProps extends AddChildren {

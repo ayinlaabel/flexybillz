@@ -1,13 +1,51 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { NavigationContainer } from "@react-navigation/native";
 import AppNavigation from "./app-navigation/AppNavigation";
+import { appState } from "../constants/app-state/appState";
+import { useDispatch } from "react-redux";
+import { setEmail, setUsername } from "../redux";
+import { setInitialRoute, setPhoneNumber } from "../redux/slices/userSlice";
 
 const Navigation = () => {
-  return (
-    <NavigationContainer>
-      <AppNavigation />
-    </NavigationContainer>
-  );
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    const handleAppState = async () => {
+      const {
+        email,
+        phoneNumber,
+        username,
+        isLogOut,
+        isLogin,
+        isRegistered,
+        isVerified,
+      } = await appState();
+
+      if (isRegistered) {
+        console.log(isRegistered);
+        dispatch(setEmail(email));
+        dispatch(setUsername(username));
+        dispatch(setPhoneNumber(phoneNumber));
+        dispatch(setInitialRoute("Verification"));
+      }
+      if (isLogin) {
+        dispatch(setUsername(username));
+        dispatch(setInitialRoute("LoginWithPin"));
+      }
+      if (isLogOut) {
+        dispatch(setInitialRoute("Login"));
+      }
+
+      if (isVerified) {
+        dispatch(setUsername(username));
+        dispatch(setInitialRoute("SecurePin"));
+      }
+    };
+
+    handleAppState();
+  }, []);
+
+  return <AppNavigation />;
 };
 
 export default Navigation;

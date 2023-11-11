@@ -21,17 +21,48 @@ import { AppStackParamsList } from "../../navigation/app-navigation/appRoutes";
 import { SafeAreaView } from "react-native-safe-area-context";
 import LoginCarousel from "../../components/carousel/login-carousel/LoginCarousel";
 import Icon from "react-native-vector-icons/Fontisto";
+import { useFormik } from "formik";
+import { loginSchema } from "./interface";
+import { userLoginSchema } from "../../schema/login.schema";
+import { userLogin } from "../../networking/getQuery";
+import { useDispatch } from "react-redux";
+import { setEmail, setUsername } from "../../redux";
 
 const Login = () => {
+  const [isLoading, setIsLoading] = useState<boolean>(false);
   const [rememberMe, setRememberMe] = useState<boolean>();
-  const { goBack, navigate } =
+  const { goBack, navigate, replace } =
     useNavigation<StackNavigationProp<AppStackParamsList>>();
 
   const handleGoBack = () => {
     goBack();
   };
 
-  const handleChange = () => {};
+  const dispatch = useDispatch();
+  // const handleChange = () => {};
+
+  const formik = useFormik({
+    initialValues: loginSchema,
+    validationSchema: userLoginSchema,
+    onSubmit: async (values) => {
+      console.log(values);
+      setIsLoading(true);
+      const { data } = await userLogin(values);
+      if (!data.success) {
+        setIsLoading(false);
+      }
+
+      if (data.data.isWalletPin) {
+        setIsLoading(false);
+        replace("Dashboard");
+      } else {
+        setIsLoading(false);
+        dispatch(setEmail(data.data.email));
+        dispatch(setUsername(data.data.userId));
+        navigate("SecurePin");
+      }
+    },
+  });
   return (
     <Container background={colors.whiteColor}>
       <StatusBar barStyle="dark-content" translucent={true} />
@@ -85,9 +116,15 @@ const Login = () => {
               rightBottomRadius="5px"
               leftBottomRadius="5px"
               px="15px"
-              onChange={handleChange}
+              value={formik.values.username}
+              onChangeText={formik.handleChange("username")}
               placeholder="Enter your email or phone number"
             />
+            {formik.errors.username && formik.touched.username && (
+              <Paragraph size="12px" color="red">
+                {formik.errors.username}
+              </Paragraph>
+            )}
           </Container>
           <Container my="10px">
             <Paragraph
@@ -98,16 +135,22 @@ const Login = () => {
               Password
             </Paragraph>
             <DefaultInput
-              keyboardType="numeric"
+              inputType="password"
               height={50}
               rightTopRadius="5px"
               leftTopRadius="5px"
               rightBottomRadius="5px"
               leftBottomRadius="5px"
               px="15px"
-              onChange={handleChange}
-              placeholder="Enter your secured pin"
+              value={formik.values.password}
+              onChangeText={formik.handleChange("password")}
+              placeholder="Enter your password"
             />
+            {formik.errors.password && formik.touched.password && (
+              <Paragraph size="12px" color="red">
+                {formik.errors.password}
+              </Paragraph>
+            )}
           </Container>
           <Container my="15px" flexDirection="row" justify="space-between">
             <TouchableOpacity
@@ -163,13 +206,14 @@ const Login = () => {
             rightTopRadius="15px"
             leftBottomRadius="15px"
             leftTopRadius="15px"
-            onPress={() => {}}
+            onPress={formik.handleSubmit}
             items="center"
             justify="center"
             size="17px"
             color={colors.whiteColor}
             background={colors.brandColor}
             fontFamily="PoppinSemiBold"
+            isLoading={isLoading}
           >
             Login
           </SoildButton>
