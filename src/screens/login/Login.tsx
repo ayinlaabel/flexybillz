@@ -15,7 +15,7 @@ import {
   countryIcon,
   radioIcon,
 } from "../../assets/icons";
-import { colors } from "../../utils";
+import { colors, storeData } from "../../utils";
 import { SoildButton } from "../../components/button";
 import { AppStackParamsList } from "../../navigation/app-navigation/appRoutes";
 import { SafeAreaView } from "react-native-safe-area-context";
@@ -26,7 +26,11 @@ import { loginSchema } from "./interface";
 import { userLoginSchema } from "../../schema/login.schema";
 import { userLogin } from "../../networking/getQuery";
 import { useDispatch } from "react-redux";
-import { setEmail, setUsername } from "../../redux";
+import { setEmail, setToken, setUsername } from "../../redux";
+import { appStateType } from "../../constants/app-state/appState";
+import { removeData } from "../../utils/shared/helpers";
+import { setFirstName } from "../../redux/slices/userSlice";
+import { useToast } from "react-native-toast-notifications";
 
 const Login = () => {
   const [isLoading, setIsLoading] = useState<boolean>(false);
@@ -39,6 +43,7 @@ const Login = () => {
   };
 
   const dispatch = useDispatch();
+  const toast = useToast();
   // const handleChange = () => {};
 
   const formik = useFormik({
@@ -50,15 +55,26 @@ const Login = () => {
       const { data } = await userLogin(values);
       if (!data.success) {
         setIsLoading(false);
+        toast.show(data.message, { type: "custom_danger" });
       }
 
       if (data.data.isWalletPin) {
         setIsLoading(false);
+        dispatch(setEmail(data.data.email));
+        dispatch(setUsername(data.data.userId));
+        dispatch(setToken(data.data.token.token));
+        await storeData(appStateType.isLogin, "true");
+        await storeData("firstName", data.data.firstName);
+        await removeData(appStateType.isLogOut);
         replace("Dashboard");
       } else {
         setIsLoading(false);
         dispatch(setEmail(data.data.email));
         dispatch(setUsername(data.data.userId));
+        dispatch(setToken(data.data.token.token));
+        await storeData("firstName", data.data.firstName);
+        await storeData(appStateType.isLogin, "true");
+        await removeData(appStateType.isVerified);
         navigate("SecurePin");
       }
     },

@@ -39,6 +39,6 @@ export interface UserLoginProps {
 }
 
 export interface UserLoginWithPinProps {
-  userId: string;
+  userId: string | null;
   walletPin: string;
 }

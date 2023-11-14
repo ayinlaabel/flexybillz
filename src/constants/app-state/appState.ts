@@ -26,6 +26,8 @@ export const appState = async () => {
   } else if (isLogOut) {
     return {
       isLogOut,
+      email,
+      username,
     };
   } else if (isVerified) {
     return {

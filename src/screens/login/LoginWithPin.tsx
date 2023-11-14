@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import {
   Container,
   ImageTag,
@@ -6,19 +6,27 @@ import {
 } from "../../utils/shared/styled-components";
 import { images } from "../../assets/images";
 import { SafeAreaView } from "react-native-safe-area-context";
-import { colors } from "../../utils";
+import { colors, getData, storeData } from "../../utils";
 import StaticKeyboard from "../../components/keyboard/Keyboard";
 import { Dimensions } from "react-native";
 import { Alert } from "react-native";
 import { useNavigation } from "@react-navigation/core";
 import { StackNavigationProp } from "@react-navigation/stack";
 import { AppStackParamsList } from "../../navigation/app-navigation/appRoutes";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { selectUser, selectUsername } from "../../redux";
 import { useToast } from "react-native-toast-notifications";
+import { userLoginWithPin } from "../../networking/getQuery";
+import {
+  setFirstName,
+  setToken,
+  setUsername,
+} from "../../redux/slices/userSlice";
 
 const LoginWithPin = () => {
   const [pin, setPin] = useState<string[]>([]);
+  const [firstName, setfirstName] = useState<string | null>("");
+  const [username, setusername] = useState<string | null>("");
 
   const { navigate } = useNavigation<StackNavigationProp<AppStackParamsList>>();
 
@@ -29,21 +37,45 @@ const LoginWithPin = () => {
   const user = useSelector(selectUser);
   const userId = useSelector(selectUsername);
 
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    const getFirstName = async () => {
+      const firstName = await getData("firstName");
+      const username = await getData("username");
+      setfirstName(firstName);
+      setusername(username);
+    };
+
+    getFirstName();
+  }, []);
+
   const { height: SCREEN_HEIGHT } = Dimensions.get("window");
 
-  const handleKeyboardValues = (text: string) => {
+  const handleKeyboardValues = async (text: string) => {
     console.log(text);
     if (pin.length < 4) {
       setPin([...pin, text]);
     }
 
     if (pin.length === 3) {
-      const walletPin = [...pin, text].length;
-      console.log("Wallet", walletPin);
-    }
+      const walletPin = [...pin, text].join("").toString();
+      console.log(walletPin);
+      const { data } = await userLoginWithPin({
+        userId: username,
+        walletPin: walletPin,
+      });
 
-    if (pin.length === 4) {
-      toast.show("not bad", { type: "custom_success" });
+      if (!data.success) {
+        toast.show(data.message, { type: "custom_danger" });
+        setPin([]);
+      } else {
+        dispatch(setFirstName(data.data.firstName));
+        dispatch(setUsername(data.data.userId));
+        dispatch(setToken(data.data.token.token));
+        navigate("Dashboard");
+        setPin([]);
+      }
     }
   };
 
@@ -84,7 +116,7 @@ const LoginWithPin = () => {
             >
               Welcome Back
             </Paragraph>
-            <Paragraph textAlign="center">{user?.firstName}</Paragraph>
+            <Paragraph textAlign="center">{firstName}</Paragraph>
           </Container>
         </Container>
         <Container>

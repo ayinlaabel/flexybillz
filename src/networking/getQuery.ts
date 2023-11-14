@@ -41,11 +41,11 @@ export const setSecurePin = async (body: SetSecurePinProps) => {
 };
 
 export const getUserByUserName = async (body: string, token: string) => {
-  const url = `${baseUrl}/user/getuserinfo?UserName=${body}`;
+  const url = `${baseUrl}/user/getuserinfo?username=${body}`;
   const header = {
-    headers: { Authorization: `Bearer ` },
+    headers: { Authorization: `Bearer ${token}` },
   };
-  return await axios.get(url);
+  return await axios.get(url, header);
 };
 
 export const userLogin = async (body: UserLoginProps) => {

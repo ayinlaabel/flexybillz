@@ -8,6 +8,11 @@ import { TouchableOpacity } from "react-native";
 import Icon from "react-native-vector-icons/Ionicons";
 import { colors } from "../../utils";
 import { fingerPrintIcon } from "../../assets/icons";
+import { useNavigation } from "@react-navigation/core";
+import { StackNavigationProp } from "@react-navigation/stack";
+import { AppStackParamsList } from "../../navigation/app-navigation/appRoutes";
+import { removeData, storeData } from "../../utils/shared/helpers";
+import { appStateType } from "../../constants/app-state/appState";
 
 interface StaticKeyboardProp {
   sendValues: (props: any) => any;
@@ -27,6 +32,14 @@ const StaticKeyboard = ({
   handleFingerPrint,
 }: StaticKeyboardProp) => {
   const [values, setValues] = useState<string[]>([]);
+  const { replace } = useNavigation<StackNavigationProp<AppStackParamsList>>();
+
+  const handleSignOut = async () => {
+    await removeData(appStateType.isLogin);
+    await storeData(appStateType.isLogOut, "true");
+    replace("Login");
+  };
+
   const handlePress = (text: string) => {
     if (values.length < 4) {
       values.push(text);
@@ -101,7 +114,7 @@ const StaticKeyboard = ({
           </Container>
         </TouchableOpacity>
         {isSignOut ? (
-          <TouchableOpacity onPress={() => sendValues("0")}>
+          <TouchableOpacity onPress={handleSignOut}>
             <Container width={70} height={80} items="center" justify="center">
               <Paragraph
                 fontFamily="PoppinSemiBold"

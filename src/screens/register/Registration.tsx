@@ -61,7 +61,7 @@ const Registration = () => {
 
       if (!data.success) {
         setIsLoading(false);
-        toast.show("Something went wrong!", { type: "custom_danger" });
+        toast.show(data.message, { type: "custom_danger" });
       } else {
         setIsLoading(false);
 

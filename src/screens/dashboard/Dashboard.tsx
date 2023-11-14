@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { FlatList, TouchableOpacity } from "react-native";
+import { FlatList, TouchableOpacity, Text } from "react-native";
 import {
   Container,
   ImageTag,
@@ -19,13 +19,49 @@ import services from "../../constants/data/services";
 import ServiceCard from "../../components/service-card/ServiceCard";
 import { convertToNaira } from "../../utils/shared/helpers";
 import Entypo from "react-native-vector-icons/Entypo";
+import { StatusBar } from "expo-status-bar";
+import { useDispatch, useSelector } from "react-redux";
+import { selectToken, selectUser, selectUsername, setUser } from "../../redux";
+import { getUserByUserName } from "../../networking/getQuery";
+import { useNavigation } from "@react-navigation/core";
+import { StackNavigationProp } from "@react-navigation/stack";
+import { AppStackParamsList } from "../../navigation/app-navigation/appRoutes";
 const Dashboard = () => {
+  const [isLoading, setIsLoading] = useState<boolean>(false);
   const [transaction, setTransaction] = useState<any[]>();
 
-  useEffect(() => {});
+  const { navigate, replace } =
+    useNavigation<StackNavigationProp<AppStackParamsList>>();
+
+  const token = useSelector(selectToken);
+  const username = useSelector(selectUsername);
+  const user = useSelector(selectUser);
+
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    setIsLoading(true);
+    const getUserDetails = async () => {
+      const { data } = await getUserByUserName(username, token);
+      if (data.success) {
+        dispatch(setUser(data.data));
+        setIsLoading(false);
+      } else {
+        replace("Login");
+      }
+    };
+
+    getUserDetails();
+  }, []);
+
+  if (isLoading) {
+    return <Text>loading...</Text>;
+  }
+
   return (
     <Container>
       <SafeAreaView />
+      <StatusBar backgroundColor="transparent" style="dark" />
       <Container
         height={60}
         pr="10px"
@@ -54,7 +90,7 @@ const Dashboard = () => {
             fontFamily="PoppinSemiBold"
             color={colors.brandColor}
           >
-            Hi, Abel
+            Hi, {user?.firstName}
           </Paragraph>
         </Container>
         <Container flexDirection="row" gap="10">
@@ -93,10 +129,10 @@ const Dashboard = () => {
               </Container>
               <Container>
                 <Paragraph mb="0px" size="32px" color={colors.whiteColor}>
-                  {convertToNaira("0.0")}
+                  {convertToNaira(user?.balance)}
                 </Paragraph>
                 <Paragraph mt="-10px" color={colors.whiteColor}>
-                  & cashback {convertToNaira("0.0")}
+                  & cashback {convertToNaira(user?.balance)}
                 </Paragraph>
               </Container>
             </Container>
