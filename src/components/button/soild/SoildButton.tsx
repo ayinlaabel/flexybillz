@@ -42,7 +42,7 @@ const SoildButton = ({
   borderRadius,
 }: ButtonProps) => {
   return (
-    <TouchableOpacity activeOpacity={0.9} disabled={disabled} onPress={onPress}>
+    <TouchableOpacity  activeOpacity={0.9} disabled={disabled} onPress={onPress}>
       <Container
         width={width}
         height={height}

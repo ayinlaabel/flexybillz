@@ -142,56 +142,54 @@ const Registration = () => {
                 </ImageContainer>
               </Container>
             </Container>
-            <Container flexDirection="row" width="100%" justify="space-between">
-              <Container my="10px" width="48%">
-                <Paragraph
-                  mb="5px"
-                  color={colors.brandColor}
-                  fontFamily="PoppinRegular"
-                >
-                  First Name
+            <Container my="10px">
+              <Paragraph
+                mb="5px"
+                color={colors.brandColor}
+                fontFamily="PoppinRegular"
+              >
+                First Name
+              </Paragraph>
+              <DefaultInput
+                height={50}
+                rightTopRadius="5px"
+                leftTopRadius="5px"
+                rightBottomRadius="5px"
+                leftBottomRadius="5px"
+                px="15px"
+                value={formik.values.firstName}
+                onChangeText={formik.handleChange("firstName")}
+                placeholder="John"
+              />
+              {formik.errors.firstName && formik.touched.firstName && (
+                <Paragraph size="12px" color={"red"}>
+                  {formik.errors.firstName}
                 </Paragraph>
-                <DefaultInput
-                  height={50}
-                  rightTopRadius="5px"
-                  leftTopRadius="5px"
-                  rightBottomRadius="5px"
-                  leftBottomRadius="5px"
-                  px="15px"
-                  value={formik.values.firstName}
-                  onChangeText={formik.handleChange("firstName")}
-                  placeholder="John"
-                />
-                {formik.errors.firstName && formik.touched.firstName && (
-                  <Paragraph size="12px" color={"red"}>
-                    {formik.errors.firstName}
-                  </Paragraph>
-                )}
-              </Container>
-              <Container my="10px" width="48%">
-                <Paragraph
-                  mb="5px"
-                  color={colors.brandColor}
-                  fontFamily="PoppinRegular"
-                >
-                  Last Name
+              )}
+            </Container>
+            <Container my="10px">
+              <Paragraph
+                mb="5px"
+                color={colors.brandColor}
+                fontFamily="PoppinRegular"
+              >
+                Last Name
+              </Paragraph>
+              <DefaultInput
+                height={50}
+                rightTopRadius="5px"
+                leftTopRadius="5px"
+                rightBottomRadius="5px"
+                leftBottomRadius="5px"
+                px="15px"
+                onChangeText={formik.handleChange("lastName")}
+                placeholder="Doe"
+              />
+              {formik.errors.lastName && formik.touched.lastName && (
+                <Paragraph size="12px" color={"red"}>
+                  {formik.errors.lastName}
                 </Paragraph>
-                <DefaultInput
-                  height={50}
-                  rightTopRadius="5px"
-                  leftTopRadius="5px"
-                  rightBottomRadius="5px"
-                  leftBottomRadius="5px"
-                  px="15px"
-                  onChangeText={formik.handleChange("lastName")}
-                  placeholder="Doe"
-                />
-                {formik.errors.lastName && formik.touched.lastName && (
-                  <Paragraph size="12px" color={"red"}>
-                    {formik.errors.lastName}
-                  </Paragraph>
-                )}
-              </Container>
+              )}
             </Container>
             <Container my="10px">
               <Paragraph
@@ -217,109 +215,105 @@ const Registration = () => {
                 </Paragraph>
               )}
             </Container>
-            <Container flexDirection="row" width="100%" justify="space-between">
-              <Container my="10px" width="48%">
-                <Paragraph
-                  mb="5px"
-                  color={colors.brandColor}
-                  fontFamily="PoppinRegular"
-                >
-                  Username
+            <Container my="10px">
+              <Paragraph
+                mb="5px"
+                color={colors.brandColor}
+                fontFamily="PoppinRegular"
+              >
+                Username
+              </Paragraph>
+              <DefaultInput
+                height={50}
+                rightTopRadius="5px"
+                leftTopRadius="5px"
+                rightBottomRadius="5px"
+                leftBottomRadius="5px"
+                px="15px"
+                onChangeText={formik.handleChange("userName")}
+                placeholder="johndoe"
+              />
+              {formik.errors.userName && formik.touched.userName && (
+                <Paragraph size="12px" color={"red"}>
+                  {formik.errors.userName}
                 </Paragraph>
-                <DefaultInput
-                  height={50}
-                  rightTopRadius="5px"
-                  leftTopRadius="5px"
-                  rightBottomRadius="5px"
-                  leftBottomRadius="5px"
-                  px="15px"
-                  onChangeText={formik.handleChange("userName")}
-                  placeholder="johndoe"
-                />
-                {formik.errors.userName && formik.touched.userName && (
-                  <Paragraph size="12px" color={"red"}>
-                    {formik.errors.userName}
-                  </Paragraph>
-                )}
-              </Container>
-              <Container my="10px" width="48%">
-                <Paragraph
-                  mb="5px"
-                  color={colors.brandColor}
-                  fontFamily="PoppinRegular"
-                >
-                  Gender
-                </Paragraph>
-                <Dropdown
-                  style={styles.dropDownContainer}
-                  data={genders}
-                  labelField="name"
-                  valueField="value"
-                  placeholder="Select Gender"
-                  placeholderStyle={styles.placeholder}
-                  renderItem={renderGender}
-                  onChange={(e) => {
-                    formik.values.gender = e.value;
-                  }}
-                />
-                {formik.errors.gender && formik.touched.firstName && (
-                  <Paragraph size="12px" color={"red"}>
-                    {formik.errors.gender}
-                  </Paragraph>
-                )}
-              </Container>
+              )}
             </Container>
-            <Container flexDirection="row" width="100%" justify="space-between">
-              <Container my="10px" width="48%">
-                <Paragraph
-                  mb="5px"
-                  color={colors.brandColor}
-                  fontFamily="PoppinRegular"
-                >
-                  Select Country
+            <Container my="10px">
+              <Paragraph
+                mb="5px"
+                color={colors.brandColor}
+                fontFamily="PoppinRegular"
+              >
+                Gender
+              </Paragraph>
+              <Dropdown
+                style={styles.dropDownContainer}
+                data={genders}
+                labelField="name"
+                valueField="value"
+                placeholder="Select Gender"
+                placeholderStyle={styles.placeholder}
+                renderItem={renderGender}
+                onChange={(e) => {
+                  formik.values.gender = e.value;
+                }}
+              />
+              {formik.errors.gender && formik.touched.firstName && (
+                <Paragraph size="12px" color={"red"}>
+                  {formik.errors.gender}
                 </Paragraph>
-                <Dropdown
-                  style={styles.dropDownContainer}
-                  data={countries}
-                  onChange={(e) => {
-                    formik.values.country = e.name;
-                  }}
-                  placeholderStyle={styles.placeholder}
-                  labelField="name"
-                  valueField="name"
-                  renderItem={renderCountries}
-                />
-                {formik.errors.country && formik.touched.country && (
-                  <Paragraph size="12px" color={"red"}>
-                    {formik.errors.country}
-                  </Paragraph>
-                )}
-              </Container>
-              <Container my="10px" width="48%">
-                <Paragraph
-                  mb="5px"
-                  color={colors.brandColor}
-                  fontFamily="PoppinRegular"
-                >
-                  Phone Number
+              )}
+            </Container>
+            <Container my="10px">
+              <Paragraph
+                mb="5px"
+                color={colors.brandColor}
+                fontFamily="PoppinRegular"
+              >
+                Select Country
+              </Paragraph>
+              <Dropdown
+                style={styles.dropDownContainer}
+                data={countries}
+                onChange={(e) => {
+                  formik.values.country = e.name;
+                }}
+                placeholderStyle={styles.placeholder}
+                labelField="name"
+                valueField="name"
+                renderItem={renderCountries}
+              />
+              {formik.errors.country && formik.touched.country && (
+                <Paragraph size="12px" color={"red"}>
+                  {formik.errors.country}
                 </Paragraph>
-                <DefaultInput
-                  inputType="phone"
-                  height={50}
-                  rightTopRadius="5px"
-                  leftTopRadius="5px"
-                  rightBottomRadius="5px"
-                  leftBottomRadius="5px"
-                  px="15px"
-                  onChangeText={formik.handleChange("phoneNumber")}
-                  placeholder="81 234 5678"
-                />
-                {formik.errors.phoneNumber && formik.touched.phoneNumber && (
-                  <Paragraph size="12px" color={"red"}>
-                    {formik.errors.phoneNumber}
-                  </Paragraph>
-                )}
-              </Container>
+              )}
+            </Container>
+            <Container my="10px">
+              <Paragraph
+                mb="5px"
+                color={colors.brandColor}
+                fontFamily="PoppinRegular"
+              >
+                Phone Number
+              </Paragraph>
+              <DefaultInput
+                inputType="phone"
+                height={50}
+                rightTopRadius="5px"
+                leftTopRadius="5px"
+                rightBottomRadius="5px"
+                leftBottomRadius="5px"
+                px="15px"
+                onChangeText={formik.handleChange("phoneNumber")}
+                placeholder="81 234 5678"
+              />
+              {formik.errors.phoneNumber && formik.touched.phoneNumber && (
+                <Paragraph size="12px" color={"red"}>
+                  {formik.errors.phoneNumber}
+                </Paragraph>
+              )}
             </Container>
             <Container>
               <Container my="10px">

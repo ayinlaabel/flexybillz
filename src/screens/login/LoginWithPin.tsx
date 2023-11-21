@@ -8,7 +8,7 @@ import { images } from "../../assets/images";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { colors, getData, storeData } from "../../utils";
 import StaticKeyboard from "../../components/keyboard/Keyboard";
-import { Dimensions } from "react-native";
+import { Dimensions, ActivityIndicator } from "react-native";
 import { Alert } from "react-native";
 import { useNavigation } from "@react-navigation/core";
 import { StackNavigationProp } from "@react-navigation/stack";
@@ -28,7 +28,10 @@ const LoginWithPin = () => {
   const [firstName, setfirstName] = useState<string | null>("");
   const [username, setusername] = useState<string | null>("");
 
-  const { navigate } = useNavigation<StackNavigationProp<AppStackParamsList>>();
+  const [isLoading, setIsLoading] = useState<boolean>(false);
+
+  const { navigate, replace } =
+    useNavigation<StackNavigationProp<AppStackParamsList>>();
 
   const [fingerPrint, setFingerPrint] = useState<boolean>(false);
 
@@ -61,19 +64,27 @@ const LoginWithPin = () => {
     if (pin.length === 3) {
       const walletPin = [...pin, text].join("").toString();
       console.log(walletPin);
+
+      setIsLoading(true);
       const { data } = await userLoginWithPin({
         userId: username,
         walletPin: walletPin,
       });
 
+      console.log(isLoading);
+
       if (!data.success) {
         toast.show(data.message, { type: "custom_danger" });
+        setIsLoading(false);
         setPin([]);
       } else {
+        // toast.show(data.message, { type: "custom_success" });
         dispatch(setFirstName(data.data.firstName));
         dispatch(setUsername(data.data.userId));
         dispatch(setToken(data.data.token.token));
-        navigate("Dashboard");
+        await storeData("token", data.data.token.token);
+        setIsLoading(false);
+        replace("Dashboard");
         setPin([]);
       }
     }
@@ -82,7 +93,7 @@ const LoginWithPin = () => {
   const handleDelete = () => {};
 
   const handleFingerPrint = () => {
-    navigate("Dashboard");
+    toast.show("Comming Soon", { type: "custom_danger" });
   };
   return (
     <Container
@@ -104,6 +115,7 @@ const LoginWithPin = () => {
             rightTopRadius="100"
             leftBottomRadius="100"
             leftTopRadius="100"
+            overflow="hidden"
           >
             <ImageTag source={images.avatar} />
           </Container>
@@ -120,42 +132,46 @@ const LoginWithPin = () => {
           </Container>
         </Container>
         <Container>
-          <Container
-            height={70}
-            flexDirection="row"
-            gap="10"
-            items="center"
-            justify="center"
-          >
-            <Paragraph
-              size="50px"
-              color={pin[0] ? colors.blackColor : colors.lightGrayColor}
-              fontFamily="PoppinMedium"
+          {isLoading ? (
+            <ActivityIndicator color={colors.brandColor} size={40} />
+          ) : (
+            <Container
+              height={70}
+              flexDirection="row"
+              gap="10"
+              items="center"
+              justify="center"
             >
-              *
-            </Paragraph>
-            <Paragraph
-              size="50px"
-              color={pin[1] ? colors.blackColor : colors.lightGrayColor}
-              fontFamily="PoppinMedium"
-            >
-              *
-            </Paragraph>
-            <Paragraph
-              size="50px"
-              color={pin[2] ? colors.blackColor : colors.lightGrayColor}
-              fontFamily="PoppinMedium"
-            >
-              *
-            </Paragraph>
-            <Paragraph
-              size="50px"
-              color={pin[3] ? colors.blackColor : colors.lightGrayColor}
-              fontFamily="PoppinMedium"
-            >
-              *
-            </Paragraph>
-          </Container>
+              <Paragraph
+                size="50px"
+                color={pin[0] ? colors.blackColor : colors.lightGrayColor}
+                fontFamily="PoppinMedium"
+              >
+                *
+              </Paragraph>
+              <Paragraph
+                size="50px"
+                color={pin[1] ? colors.blackColor : colors.lightGrayColor}
+                fontFamily="PoppinMedium"
+              >
+                *
+              </Paragraph>
+              <Paragraph
+                size="50px"
+                color={pin[2] ? colors.blackColor : colors.lightGrayColor}
+                fontFamily="PoppinMedium"
+              >
+                *
+              </Paragraph>
+              <Paragraph
+                size="50px"
+                color={pin[3] ? colors.blackColor : colors.lightGrayColor}
+                fontFamily="PoppinMedium"
+              >
+                *
+              </Paragraph>
+            </Container>
+          )}
           <StaticKeyboard
             sendValues={handleKeyboardValues}
             handleDelete={handleDelete}

@@ -6,8 +6,12 @@ import { colors } from "../../utils";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { FlatList } from "react-native";
 import { allServices } from "../../constants/data/services";
+import { useNavigation } from "@react-navigation/core";
+import { StackNavigationProp } from "@react-navigation/stack";
+import { AppStackParamsList } from "../../navigation/app-navigation/appRoutes";
 
 const Services = () => {
+  const { navigate } = useNavigation<StackNavigationProp<AppStackParamsList>>();
   return (
     <Container height={SCREEN_HEIGHT} width={SCREEN_WIDTH}>
       <SafeAreaView />
@@ -29,10 +33,13 @@ const Services = () => {
           <FlatList
             data={allServices}
             renderItem={({ item }: any) => (
-              <TouchableOpacity activeOpacity={0.9}>
+              <TouchableOpacity
+                activeOpacity={0.9}
+                onPress={() => navigate(item.path)}
+              >
                 <Container
-                  width={110}
-                  height={135}
+                  width={117}
+                  height={125}
                   background={colors.whiteColor}
                   items="center"
                   justify="space-evenly"
@@ -57,7 +64,7 @@ const Services = () => {
             )}
             numColumns={3}
             contentContainerStyle={{ gap: 20 }}
-            columnWrapperStyle={{ gap: 20 }}
+            columnWrapperStyle={{ gap: 10 }}
           />
         </Container>
       </Container>

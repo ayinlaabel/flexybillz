@@ -48,66 +48,66 @@ const StaticKeyboard = ({
   };
 
   return (
-    <Container width={"70%"} mt={mt} items="center" justify="center">
-      <Container flexDirection="row" wrap="wrap" gap="35" justify="center">
+    <Container width={"90%"} mt={mt} items="center" justify="center">
+      <Container flexDirection="row" wrap="wrap" gap="20" justify="center">
         <TouchableOpacity onPress={() => sendValues("1")}>
-          <Container width={70} height={80} items="center" justify="center">
+          <Container width={110} height={80} items="center" justify="center">
             <Paragraph fontFamily="PoppinSemiBold" size="20px">
               1
             </Paragraph>
           </Container>
         </TouchableOpacity>
         <TouchableOpacity onPress={() => sendValues("2")}>
-          <Container width={70} height={80} items="center" justify="center">
+          <Container width={110} height={80} items="center" justify="center">
             <Paragraph fontFamily="PoppinSemiBold" size="20px">
               2
             </Paragraph>
           </Container>
         </TouchableOpacity>
         <TouchableOpacity onPress={() => sendValues("3")}>
-          <Container width={70} height={80} items="center" justify="center">
+          <Container width={110} height={80} items="center" justify="center">
             <Paragraph fontFamily="PoppinSemiBold" size="20px">
               3
             </Paragraph>
           </Container>
         </TouchableOpacity>
         <TouchableOpacity onPress={() => sendValues("4")}>
-          <Container width={70} height={80} items="center" justify="center">
+          <Container width={110} height={80} items="center" justify="center">
             <Paragraph fontFamily="PoppinSemiBold" size="20px">
               4
             </Paragraph>
           </Container>
         </TouchableOpacity>
         <TouchableOpacity onPress={() => sendValues("5")}>
-          <Container width={70} height={80} items="center" justify="center">
+          <Container width={110} height={80} items="center" justify="center">
             <Paragraph fontFamily="PoppinSemiBold" size="20px">
               5
             </Paragraph>
           </Container>
         </TouchableOpacity>
         <TouchableOpacity onPress={() => sendValues("6")}>
-          <Container width={70} height={80} items="center" justify="center">
+          <Container width={110} height={80} items="center" justify="center">
             <Paragraph fontFamily="PoppinSemiBold" size="20px">
               6
             </Paragraph>
           </Container>
         </TouchableOpacity>
         <TouchableOpacity onPress={() => sendValues("7")}>
-          <Container width={70} height={80} items="center" justify="center">
+          <Container width={110} height={80} items="center" justify="center">
             <Paragraph fontFamily="PoppinSemiBold" size="20px">
               7
             </Paragraph>
           </Container>
         </TouchableOpacity>
         <TouchableOpacity onPress={() => sendValues("8")}>
-          <Container width={70} height={80} items="center" justify="center">
+          <Container width={110} height={80} items="center" justify="center">
             <Paragraph fontFamily="PoppinSemiBold" size="20px">
               8
             </Paragraph>
           </Container>
         </TouchableOpacity>
         <TouchableOpacity onPress={() => sendValues("9")}>
-          <Container width={70} height={80} items="center" justify="center">
+          <Container width={110} height={80} items="center" justify="center">
             <Paragraph fontFamily="PoppinSemiBold" size="20px">
               9
             </Paragraph>
@@ -115,7 +115,7 @@ const StaticKeyboard = ({
         </TouchableOpacity>
         {isSignOut ? (
           <TouchableOpacity onPress={handleSignOut}>
-            <Container width={70} height={80} items="center" justify="center">
+            <Container width={110} height={80} items="center" justify="center">
               <Paragraph
                 fontFamily="PoppinSemiBold"
                 size="16px"
@@ -126,17 +126,17 @@ const StaticKeyboard = ({
             </Container>
           </TouchableOpacity>
         ) : (
-          <Container width={70} height={80} items="center" justify="center" />
+          <Container width={110} height={80} items="center" justify="center" />
         )}
         <TouchableOpacity onPress={() => sendValues("0")}>
-          <Container width={70} height={80} items="center" justify="center">
+          <Container width={110} height={80} items="center" justify="center">
             <Paragraph fontFamily="PoppinSemiBold" size="20px">
               0
             </Paragraph>
           </Container>
         </TouchableOpacity>
         {isFingerPrint ? (
-          <Container width={70} height={80} items="center" justify="center">
+          <Container width={110} height={80} items="center" justify="center">
             <Container
               width={65}
               height={70}

@@ -8,6 +8,7 @@ const notificationIcon = require("./notificationIcon.png");
 const activeNotificationIcon = require("./activeNotificationIcon.png");
 const transferIcon = require("./transferIcon.png");
 const referEarnIcon = require("./referEarnIcon.png");
+const successIcon = require("./successIcon.png");
 
 export {
   backIcon,
@@ -20,4 +21,5 @@ export {
   activeNotificationIcon,
   transferIcon,
   referEarnIcon,
+  successIcon,
 };

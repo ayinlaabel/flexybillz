@@ -20,6 +20,9 @@ import LoginWithPin from "../../screens/login/LoginWithPin";
 import Dashboard from "../../screens/dashboard/Dashboard";
 import SelectVerificationMode from "../../screens/verification/SelectVerificationMode";
 import AuthNavigation from "../auth-navigation/AuthNavigation";
+import Airtime from "../../screens/services/buy-airtime/Airtime";
+import Success from "../../screens/services/success/Success";
+import BuyData from "../../screens/services/buy-data/BuyData";
 
 export type AppStackParamsList = {
   GetStarted: undefined;
@@ -32,6 +35,9 @@ export type AppStackParamsList = {
   LoginWithPin: undefined;
   Dashboard: undefined;
   SelectVerificationMode: undefined;
+  Airtime: undefined;
+  SuccessAirtime: { amount: "" };
+  Data: undefined;
 };
 
 type StackNavigatorOptions<ParamList extends ParamListBase> =
@@ -107,5 +113,17 @@ export const appRoutes: AppRouteStackType = [
   {
     name: "SelectVerificationMode",
     component: SelectVerificationMode,
+  },
+  {
+    name: "Airtime",
+    component: Airtime,
+  },
+  {
+    name: "SuccessAirtime",
+    component: Success,
+  },
+  {
+    name: "Data",
+    component: BuyData,
   },
 ];

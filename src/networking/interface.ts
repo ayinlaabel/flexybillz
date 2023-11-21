@@ -39,6 +39,23 @@ export interface UserLoginProps {
 }
 
 export interface UserLoginWithPinProps {
-  userId: string | null;
+  userName?: string | null;
+  userId?: string | null;
   walletPin: string;
+}
+
+export interface BuyAirtimeProps {
+  userName: string;
+  amount: number;
+  serviceID: string;
+  phone: string;
+}
+
+export interface BuyDataProps {
+  userName: string;
+  serviceID: string;
+  amount: number;
+  phone: string;
+  billersCode: string;
+  variation_code: string;
 }

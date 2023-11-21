@@ -1,3 +1,5 @@
+import { ViewStyle } from "react-native";
+
 export interface ContainerProps {
   height?: number | string;
   width?: number | string;
@@ -25,6 +27,8 @@ export interface ContainerProps {
   border?: string;
   borderRight?: string;
   borderLeft?: string;
+  borderTop?: string;
+  borderBottom?: string;
   borderColor?: string;
   position?: string;
   borderRadius?: string;
@@ -36,6 +40,7 @@ export interface ContainerProps {
   wrap?: string;
   shadow?: boolean;
   children?: any;
+  overflow?: "visible" | "hidden" | undefined;
 }
 
 export interface TextProps {
@@ -50,6 +55,7 @@ export interface TextProps {
   mr?: string;
   fontFamily?: string;
   lineHeight?: string;
+  textTransform?: "capitalize" | "uppercase" | "lowercase" | "none" | undefined;
 }
 
 export interface InputContainerProps extends AddChildren {

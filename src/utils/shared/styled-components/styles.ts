@@ -1,5 +1,5 @@
 import styled from "styled-components/native";
-import { StyleSheet } from "react-native";
+import { StyleSheet, StyleProp, ViewStyle } from "react-native";
 import { hp, wp } from "../responsive-dimension";
 import React from "react";
 import {
@@ -25,6 +25,14 @@ export const Container: React.FC<ContainerProps> = styled.View`
   background: ${({ background }: any) =>
     background ? background : "transparent"};
   ${({ border }: any) => (border ? `border-width: ${border};` : null)};
+  ${({ borderTop }: any) =>
+    borderTop ? `border-top-width: ${borderTop};` : null};
+  ${({ borderBottom }: any) =>
+    borderBottom ? `border-bottom-width: ${borderBottom};` : null};
+  ${({ borderRight }: any) =>
+    borderRight ? `border-right-width: ${borderRight};` : null};
+  ${({ borderLeft }: any) =>
+    borderLeft ? `border-left-width: ${borderLeft};` : null};
   ${({ borderRight }: any) =>
     borderRight ? `border-right-width: ${borderRight};` : null};
   ${({ borderLeft }: any) =>
@@ -59,9 +67,9 @@ export const Container: React.FC<ContainerProps> = styled.View`
       : null};
   ${({ leftBottomRadius }: any) =>
     leftBottomRadius ? `border-bottom-left-radius: ${leftBottomRadius}` : null};
-
-  overflow: hidden;
+  ${({ overflow }: any) => (overflow ? `overflow: ${overflow};` : null)};
   ${({ gap }: any) => (gap ? `gap: ${gap};` : null)};
+  ${({ style }: any) => ({ ...style })};
   ${({ wrap }: any) => (wrap ? `flex-wrap: ${wrap};` : null)};
   ${({ shadow }: any) =>
     shadow
@@ -86,6 +94,8 @@ export const Paragraph: React.FC<TextProps> = styled.Text`
     fontFamily ? fontFamily : "PoppinRegular"};
   ${({ lineHeight }: any) =>
     lineHeight ? `line-height: ${lineHeight};` : null}
+  ${({ textTransform }: any) =>
+    textTransform ? `text-transform: ${textTransform};` : null}
 `;
 
 export const InputContainer: React.FC<InputContainerProps> = styled.View`
@@ -120,6 +130,9 @@ export const DefaultTextInput: React.FC<InputProp> = styled.TextInput`
     width ? (typeof width === typeof 0 ? wp(width) : width) : "100%"};
   ${({ px }: any) => (px ? `padding-right: ${px}; padding-left:${px};` : null)};
   ${({ textAlign }: any) => (textAlign ? `text-align: ${textAlign}` : null)};
+  ${({ size }: any) => (size ? `font-size: ${size}` : null)};
+  ${({ fontFamily }: any) =>
+    fontFamily ? `font-family: ${fontFamily}` : null};
 `;
 export const ImageContainer: React.FC<ImageContainerProps> = styled.View`
   height: ${({ height }: any) => (height ? hp(height) : "100%")};
@@ -154,5 +167,23 @@ export const styles = StyleSheet.create({
   },
   placeholder: {
     color: colors.lightGrayColor,
+  },
+});
+
+export const style = StyleSheet.create({
+  dropDownContainer: {
+    height: 55,
+    backgroundColor: colors.grayColor,
+    paddingHorizontal: 10,
+    borderRadius: 10,
+    marginVertical: 5,
+  },
+  placeholder: {
+    fontSize: 14,
+    color: colors.blackColor70,
+  },
+  containerStyle: {
+    paddingVertical: 10,
+    paddingHorizontal: 10,
   },
 });

@@ -8,6 +8,7 @@ export enum InputType {
   PHONE = "phone",
 }
 export interface InputProp extends InputContainerProps, TextInputProps {
+  disabled?: boolean;
   size?: string;
   fontFamily?: string;
   px?: string;

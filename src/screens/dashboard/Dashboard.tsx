@@ -1,5 +1,10 @@
 import React, { useEffect, useState } from "react";
-import { FlatList, TouchableOpacity, Text } from "react-native";
+import {
+  FlatList,
+  TouchableOpacity,
+  Text,
+  ActivityIndicator,
+} from "react-native";
 import {
   Container,
   ImageTag,
@@ -17,15 +22,22 @@ import Icon from "react-native-vector-icons/Entypo";
 import MaterialIcons from "react-native-vector-icons/MaterialIcons";
 import services from "../../constants/data/services";
 import ServiceCard from "../../components/service-card/ServiceCard";
-import { convertToNaira } from "../../utils/shared/helpers";
+import { convertToNaira, getData } from "../../utils/shared/helpers";
 import Entypo from "react-native-vector-icons/Entypo";
 import { StatusBar } from "expo-status-bar";
 import { useDispatch, useSelector } from "react-redux";
-import { selectToken, selectUser, selectUsername, setUser } from "../../redux";
+import {
+  selectToken,
+  selectUser,
+  selectUsername,
+  setToken,
+  setUser,
+} from "../../redux";
 import { getUserByUserName } from "../../networking/getQuery";
 import { useNavigation } from "@react-navigation/core";
 import { StackNavigationProp } from "@react-navigation/stack";
 import { AppStackParamsList } from "../../navigation/app-navigation/appRoutes";
+import { SCREEN_HEIGHT, SCREEN_WIDTH } from "../../constants";
 const Dashboard = () => {
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [transaction, setTransaction] = useState<any[]>();
@@ -54,9 +66,18 @@ const Dashboard = () => {
     getUserDetails();
   }, []);
 
-  if (isLoading) {
-    return <Text>loading...</Text>;
-  }
+  // if (isLoading) {
+  //   return (
+  //     <Container
+  //       height={JSON.stringify(SCREEN_HEIGHT)}
+  //       width={JSON.stringify(SCREEN_WIDTH)}
+  //       items="center"
+  //       justify="center"
+  //     >
+  //       <ActivityIndicator size={20} color={colors.brandColor} />
+  //     </Container>
+  //   );
+  // }
 
   return (
     <Container>
@@ -82,6 +103,7 @@ const Dashboard = () => {
             leftBottomRadius="100"
             leftTopRadius="100"
             mr="10px"
+            overflow="hidden"
           >
             <ImageTag source={images.avatar} />
           </Container>
@@ -129,7 +151,13 @@ const Dashboard = () => {
               </Container>
               <Container>
                 <Paragraph mb="0px" size="32px" color={colors.whiteColor}>
-                  {convertToNaira(user?.balance)}
+                  {isLoading ? (
+                    <Container py="10px" items="center">
+                      <ActivityIndicator color={colors.whiteColor} />
+                    </Container>
+                  ) : (
+                    convertToNaira(user?.balance)
+                  )}
                 </Paragraph>
                 <Paragraph mt="-10px" color={colors.whiteColor}>
                   & cashback {convertToNaira(user?.balance)}
@@ -238,7 +266,7 @@ const Dashboard = () => {
           >
             <FlatList
               data={services}
-              renderItem={ServiceCard}
+              renderItem={({ item }: any) => <ServiceCard item={item} />}
               numColumns={4}
               keyExtractor={(_, index) => `sub_${index}`}
               contentContainerStyle={{ gap: 30 }}

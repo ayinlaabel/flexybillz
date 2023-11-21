@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { TextInput, TouchableOpacity } from "react-native";
 import { Container } from "../../utils/shared/styled-components";
 import {
@@ -34,6 +34,10 @@ const DefaultInput = ({
   countryCode = "+234",
   maxLength,
   ref,
+  disabled,
+  defaultValue,
+  value,
+  size,
 }: InputProp) => {
   const [text, setText] = useState("Show");
   const [secure, setSecure] = useState<boolean>(
@@ -56,6 +60,11 @@ const DefaultInput = ({
         break;
     }
   };
+
+  useEffect(() => {
+    console.log(value);
+  }, [value, defaultValue]);
+
   return (
     <Container
       background={background}
@@ -79,7 +88,7 @@ const DefaultInput = ({
       {inputType === InputType.PHONE && (
         <Container
           height="100%"
-          width={"30%"}
+          width={"20%"}
           py="10px"
           pl="10px"
           justify="center"
@@ -95,6 +104,7 @@ const DefaultInput = ({
         </Container>
       )}
       <DefaultTextInput
+        editable={disabled}
         textAlign={textAlign}
         width={inputType === InputType.PASSWORD ? "85%" : "100%"}
         secureTextEntry={secure}
@@ -106,6 +116,9 @@ const DefaultInput = ({
         onChangeText={onChangeText}
         maxLength={maxLength}
         ref={ref}
+        value={value}
+        defaultValue={defaultValue}
+        size={size}
       />
       {inputType === InputType.PASSWORD && (
         <Container height="100%" width={"15%"}>

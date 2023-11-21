@@ -81,10 +81,8 @@ const VerifySecurePin = () => {
         walletPin: values.pin,
       });
 
-      console.log(data);
       if (!data.success) {
         setIsLoading(false);
-        console.log(data);
       } else {
         const { data } = await userLoginWithPin({
           userId: username,

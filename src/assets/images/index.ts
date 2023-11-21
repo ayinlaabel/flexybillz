@@ -13,4 +13,8 @@ export const images = {
   avatar: require("./avatar.jpg"),
   banner: require("./ad2.png"),
   verifyImage: require("./verifyImage.png"),
+  mtn: require("./mtn.jpg"),
+  glo: require("./glo.jpg"),
+  airtel: require("./airtel.jpg"),
+  etisalat: require("./9mobile.jpg"),
 };

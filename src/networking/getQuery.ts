@@ -7,6 +7,8 @@ import {
   SetSecurePinProps,
   UserLoginProps,
   UserLoginWithPinProps,
+  BuyAirtimeProps,
+  BuyDataProps,
 } from "./interface";
 import axios, { AxiosError } from "axios";
 import { BASEURL, BA_USERNAME, BA_PASSWORD } from "@env";
@@ -56,4 +58,44 @@ export const userLogin = async (body: UserLoginProps) => {
 export const userLoginWithPin = async (body: UserLoginWithPinProps) => {
   const url = `${baseUrl}/user/loginwithpin`;
   return await axios.post(url, body, header);
+};
+
+export const getNetwork = async (token: string) => {
+  const url = `${baseUrl}/bills/vtpass-getserviceId`;
+  const header = {
+    headers: { Authorization: `Bearer ${token}` },
+  };
+  return await axios.get(url, header);
+};
+
+export const buyAirtime = async (token: string, body: BuyAirtimeProps) => {
+  const url = `${baseUrl}/bills/vtpass-subcription-airtime`;
+  const header = {
+    headers: { Authorization: `Bearer ${token}` },
+  };
+  return await axios.post(url, body, header);
+};
+
+export const buyData = async (token: string, body: BuyDataProps) => {
+  const url = `${baseUrl}/bills/vtpass-subcription-data`;
+  const header = {
+    headers: { Authorization: `Bearer ${token}` },
+  };
+  return await axios.post(url, body, header);
+};
+
+export const verifyPin = async (body: UserLoginWithPinProps, token: string) => {
+  const url = `${baseUrl}/user/confirmwalletpin`;
+  const header = {
+    headers: { Authorization: `Bearer ${token}` },
+  };
+  return axios.post(url, body, header);
+};
+
+export const getAvailableData = async (body: string, token: string) => {
+  const url = `${baseUrl}/bills/vtpass-getvariationcode-data-db?serviceID=${body}`;
+  const header = {
+    headers: { Authorization: `Bearer ${token}` },
+  };
+  return axios.get(url, header);
 };
