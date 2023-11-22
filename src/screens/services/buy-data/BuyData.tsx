@@ -20,29 +20,13 @@ import {
   renderDataItem,
 } from "../../../components/modals/interface";
 import { useSelector } from "react-redux";
-import {
-  selectPhoneNumber,
-  selectToken,
-  selectUser,
-  selectUsername,
-} from "../../../redux";
-import {
-  buyData,
-  getAvailableData,
-  getNetwork,
-} from "../../../networking/getQuery";
+import { selectToken, selectUser, selectUsername } from "../../../redux";
+import { getAvailableData } from "../../../networking/getQuery";
 import DefaultInput from "../../../components/input/DefaultInput";
 import FontAwesome5 from "react-native-vector-icons/FontAwesome5";
 import AntDesign from "react-native-vector-icons/AntDesign";
 import { SCREEN_HEIGHT, SCREEN_WIDTH } from "../../../constants";
-import {
-  NestableScrollContainer,
-  NestableDraggableFlatList,
-} from "react-native-draggable-flatlist";
-import {
-  MockNetwork,
-  MockNetworkData,
-} from "../../../__mock__/services/service";
+import { MockNetworkData } from "../../../__mock__/services/service";
 import { useNavigation } from "@react-navigation/core";
 import { StackNavigationProp } from "@react-navigation/stack";
 import { AppStackParamsList } from "../../../navigation/app-navigation/appRoutes";
@@ -83,18 +67,6 @@ const BuyData = () => {
     if (phone.length !== 11) {
       toast.show("invalid phone number", { type: "custom_danger" });
     } else {
-      // let newPhone = "0" + phone;
-      // const { data: res } = await buyData(token, {
-      //   userName,
-      //   serviceID: data.serviceID,
-      //   amount: data.variation_amount,
-      //   phone: newPhone,
-      //   variation_code: data.variation_code,
-      //   billersCode: "FlexyBillz",
-      // });
-      // console.log(data);
-      // console.log("res", res);
-      console.log(phone);
       setAirtimeModal(true);
     }
   };
@@ -197,25 +169,20 @@ const BuyData = () => {
         setSelectedNetwork(provider);
       }
 
-      console.log("provider", provider);
       const { data } = await getAvailableData(
         selectedNetwork?.data_keys,
         token
       );
 
       if (!data.success) {
-        console.log(data);
-
         setIsLoading(false);
       } else {
         setIsLoading(false);
 
-        console.log(provider);
         setAvailableData(data.data);
       }
     };
 
-    console.log("phone", phone);
     getData();
   }, [phone]);
   return (
@@ -265,7 +232,6 @@ const BuyData = () => {
                 >
                   <TouchableOpacity
                     onPress={() => {
-                      console.log(true);
                       setNetwork(true);
                     }}
                     style={{

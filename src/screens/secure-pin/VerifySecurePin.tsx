@@ -50,15 +50,12 @@ const VerifySecurePin = () => {
   };
   const handleSubmit = () => {
     if (pin.length === 4) {
-      console.log("first");
       formik.values.confirmPin = pin.join("");
-      console.log(formik.values);
       formik.handleSubmit();
     }
   };
 
   const handleKeyboard = (values: string) => {
-    console.log(values);
     if (pin.length < 4) {
       setPin([...pin, values]);
     }

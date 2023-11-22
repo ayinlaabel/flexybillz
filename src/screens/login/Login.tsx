@@ -50,7 +50,6 @@ const Login = () => {
     initialValues: loginSchema,
     validationSchema: userLoginSchema,
     onSubmit: async (values) => {
-      console.log(values);
       setIsLoading(true);
       const { data } = await userLogin(values);
       if (!data.success) {

@@ -22,7 +22,6 @@ const Navigation = () => {
       } = await appState();
 
       if (isRegistered) {
-        console.log(isRegistered);
         dispatch(setEmail(email));
         dispatch(setUsername(username));
         dispatch(setPhoneNumber(phoneNumber));

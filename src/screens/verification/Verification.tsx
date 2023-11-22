@@ -46,7 +46,6 @@ const Verification = () => {
   };
 
   const handleChange = (e: any) => {
-    console.log(e);
     formik.values.otp = e;
     formik.handleSubmit();
   };
@@ -76,7 +75,6 @@ const Verification = () => {
           "Invalid OTP, OTP does not match with the one sent to your email",
           { type: "custom_danger" }
         );
-        console.log(data);
       } else {
         await removeData(appStateType.isRegistered);
         await storeData(appStateType.isVerified, "true");

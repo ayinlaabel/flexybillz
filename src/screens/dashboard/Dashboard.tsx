@@ -181,23 +181,28 @@ const Dashboard = () => {
           </Container>
           <Container flexDirection="row" gap="10" justify="space-around">
             <Container items="center">
-              <Container
-                height={40}
-                width={40}
-                background={colors.whiteColor}
-                rightBottomRadius="5px"
-                rightTopRadius="5px"
-                leftBottomRadius="5px"
-                leftTopRadius="5px"
-                mb="5px"
-                items="center"
-                justify="center"
+              <TouchableOpacity
+                onPress={() => navigate("FundWallet")}
+                style={{ alignItems: "center" }}
               >
-                <Icon name="plus" size={20} color={colors.brandColor} />
-              </Container>
-              <Paragraph color={colors.whiteColor} size="12px">
-                Add Money
-              </Paragraph>
+                <Container
+                  height={40}
+                  width={40}
+                  background={colors.whiteColor}
+                  rightBottomRadius="5px"
+                  rightTopRadius="5px"
+                  leftBottomRadius="5px"
+                  leftTopRadius="5px"
+                  mb="5px"
+                  items="center"
+                  justify="center"
+                >
+                  <Icon name="plus" size={20} color={colors.brandColor} />
+                </Container>
+                <Paragraph color={colors.whiteColor} size="12px">
+                  Add Money
+                </Paragraph>
+              </TouchableOpacity>
             </Container>
             <Container items="center">
               <Container

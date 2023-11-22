@@ -1,3 +1,4 @@
+import AuthNavigation from "@navigation/auth-navigation/AuthNavigation";
 import {
   ParamListBase,
   StackNavigationState,
@@ -9,20 +10,19 @@ import {
   StackNavigationEventMap,
   createStackNavigator,
 } from "@react-navigation/stack";
-import GetStarted from "../../screens/get-started/GetStarted";
-import Login from "../../screens/login/Login";
-import Registration from "../../screens/register/Registration";
-import Verification from "../../screens/verification/Verification";
-import SecurePin from "../../screens/secure-pin/SecurePin";
-import VerifySecurePin from "../../screens/secure-pin/VerifySecurePin";
-import FingerPrintSetup from "../../screens/finger-print/FingerPrintSetup";
-import LoginWithPin from "../../screens/login/LoginWithPin";
-import Dashboard from "../../screens/dashboard/Dashboard";
-import SelectVerificationMode from "../../screens/verification/SelectVerificationMode";
-import AuthNavigation from "../auth-navigation/AuthNavigation";
-import Airtime from "../../screens/services/buy-airtime/Airtime";
-import Success from "../../screens/services/success/Success";
-import BuyData from "../../screens/services/buy-data/BuyData";
+import FingerPrintSetup from "@screens/finger-print/FingerPrintSetup";
+import FundWallet from "@screens/fund-wallet/FundWallet";
+import GetStarted from "@screens/get-started/GetStarted";
+import Login from "@screens/login/Login";
+import LoginWithPin from "@screens/login/LoginWithPin";
+import Registration from "@screens/register/Registration";
+import SecurePin from "@screens/secure-pin/SecurePin";
+import VerifySecurePin from "@screens/secure-pin/VerifySecurePin";
+import Airtime from "@screens/services/buy-airtime/Airtime";
+import BuyData from "@screens/services/buy-data/BuyData";
+import Success from "@screens/services/success/Success";
+import SelectVerificationMode from "@screens/verification/SelectVerificationMode";
+import Verification from "@screens/verification/Verification";
 
 export type AppStackParamsList = {
   GetStarted: undefined;
@@ -38,6 +38,7 @@ export type AppStackParamsList = {
   Airtime: undefined;
   SuccessAirtime: { amount: "" };
   Data: undefined;
+  FundWallet: undefined;
 };
 
 type StackNavigatorOptions<ParamList extends ParamListBase> =
@@ -125,5 +126,9 @@ export const appRoutes: AppRouteStackType = [
   {
     name: "Data",
     component: BuyData,
+  },
+  {
+    name: "FundWallet",
+    component: FundWallet,
   },
 ];

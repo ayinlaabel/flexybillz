@@ -41,6 +41,7 @@ export interface ContainerProps {
   shadow?: boolean;
   children?: any;
   overflow?: "visible" | "hidden" | undefined;
+  zIndex?: number;
 }
 
 export interface TextProps {

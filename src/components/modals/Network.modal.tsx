@@ -29,20 +29,7 @@ const NetworkModal = ({
 
   const token = useSelector(selectToken);
 
-  // useEffect(() => {
-  //   const GetNetwork = async () => {
-  //     const { data } = await getNetwork(token);
-  //     if (!data.success) {
-  //       console.log(data);
-  //     } else {
-  //       console.log(data.data.airtime);
-  //       setNetwork(data.data.airtime);
-  //       setNetworkReady(true);
-  //     }
-  //   };
 
-  //   GetNetwork();
-  // }, []);
 
   const __rendetNetwork = ({ item }: renderAirtimeItem) => {
     return (

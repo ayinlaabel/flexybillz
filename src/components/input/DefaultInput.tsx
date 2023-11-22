@@ -61,10 +61,6 @@ const DefaultInput = ({
     }
   };
 
-  useEffect(() => {
-    console.log(value);
-  }, [value, defaultValue]);
-
   return (
     <Container
       background={background}

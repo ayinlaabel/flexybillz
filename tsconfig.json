@@ -3,6 +3,18 @@
   "compilerOptions": {
     "jsx": "react",
     "esModuleInterop": true,
-    "strict": true
+    "strict": true,
+    "baseUrl": "./",
+    "paths": {
+      "@assets/*": ["./src/assets/*"],
+      "@screens/*": ["./src/screens/*"],
+      "@components/*": ["./src/components/*"],
+      "@constants/*": ["./src/constants/*"],
+      "@utils/*": ["./src/utils/*"],
+      "@navigation/*": ["./src/navigation/*"],
+      "@networking/*": ["./src/networking/*"],
+      "@redux/*": ["./src/redux/*"],
+      "@mocks/*": ["./src/__mock__/*"]
+    }
   }
 }

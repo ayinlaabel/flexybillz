@@ -74,7 +74,6 @@ const Airtime = () => {
   const handleSelectedNetwork = (data: AirtimeProps) => {
     setSelectedNetwork(data);
     formik.values.serviceID = data.data_keys;
-    console.log("data", data.data_keys);
   };
 
   const renderNetwork = ({ name, icon }: any) => {

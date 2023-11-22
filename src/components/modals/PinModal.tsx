@@ -42,14 +42,11 @@ const PinModal = ({
       newPin.pop();
       setPin([...newPin]);
     }
-
-    console.log(pin.length);
   };
   const handleKeyBoard = async (data: string) => {
     if (pin.length < 4) {
       setPin([...pin, data]);
     }
-    console.log(keyboardKey);
     if (pin.length === 3) {
       setIsVerifying(true);
       const walletPin = [...pin, data].join("");
@@ -68,12 +65,6 @@ const PinModal = ({
       } else {
         switch (incoming.type) {
           case "Airtime":
-            console.log({
-              serviceID: incoming.serviceID,
-              amount: JSON.parse(incoming.amount),
-              userName: incoming.userName,
-              phone: incoming.phone,
-            });
             const { data: airtime } = await buyAirtime(token, {
               serviceID: incoming.serviceID,
               amount: JSON.parse(incoming.amount),
@@ -111,7 +102,6 @@ const PinModal = ({
               variation_code: incoming.variation_code,
               billersCode: "FlexyBillz",
             });
-            console.log(incoming.phone);
             if (!mobileData.success) {
               setPin([]);
               setIsVerifying(false);
@@ -122,7 +112,6 @@ const PinModal = ({
               setIsVerifying(false);
               setPin([]);
               const { content, ...others } = mobileData.data;
-              console.log(mobileData.data);
               dispatch(
                 setTransaction({
                   ...content.transactions,

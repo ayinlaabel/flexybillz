@@ -33,12 +33,9 @@ const SecurePin = () => {
   };
 
   const handleKeyboard = (values: string) => {
-    console.log(values);
     if (pin.length < 4) {
       setPin([...pin, values]);
     }
-
-    console.log(pin);
   };
   const handleDelete = () => {
     let newPin = pin;

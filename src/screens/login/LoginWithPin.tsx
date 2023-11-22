@@ -56,22 +56,18 @@ const LoginWithPin = () => {
   const { height: SCREEN_HEIGHT } = Dimensions.get("window");
 
   const handleKeyboardValues = async (text: string) => {
-    console.log(text);
     if (pin.length < 4) {
       setPin([...pin, text]);
     }
 
     if (pin.length === 3) {
       const walletPin = [...pin, text].join("").toString();
-      console.log(walletPin);
 
       setIsLoading(true);
       const { data } = await userLoginWithPin({
         userId: username,
         walletPin: walletPin,
       });
-
-      console.log(isLoading);
 
       if (!data.success) {
         toast.show(data.message, { type: "custom_danger" });

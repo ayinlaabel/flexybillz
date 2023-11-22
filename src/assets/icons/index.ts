@@ -4,6 +4,7 @@ const countryIcon = require("./countryIcon.png");
 const radioIcon = require("./radioIcon.png");
 const fingerPrintIcon = require("./fingerPrintIcon.png");
 const supportIcon = require("./supportIcon.png");
+const supportIconWhite = require("./supportIconWhite.png");
 const notificationIcon = require("./notificationIcon.png");
 const activeNotificationIcon = require("./activeNotificationIcon.png");
 const transferIcon = require("./transferIcon.png");
@@ -22,4 +23,5 @@ export {
   transferIcon,
   referEarnIcon,
   successIcon,
+  supportIconWhite,
 };

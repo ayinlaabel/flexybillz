@@ -32,9 +32,6 @@ const Success = () => {
     goBack();
   };
 
-  useEffect(() => {
-    console.log(transation);
-  });
   return (
     <Container height={JSON.stringify(SCREEN_HEIGHT)}>
       <SafeAreaView />

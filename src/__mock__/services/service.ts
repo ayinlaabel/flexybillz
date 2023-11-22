@@ -52,7 +52,7 @@ export const MockNetworkData: AirtimeProps[] = [
     data_name: "9MOBILE",
   },
   {
-    data_values: "NTN-NG",
+    data_values: "MTN-NG",
     data_url: images.mtn,
     data_keys: "mtn-data",
     airtime_keys: "mtn",

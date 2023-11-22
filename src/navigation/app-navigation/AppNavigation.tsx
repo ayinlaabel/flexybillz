@@ -42,7 +42,6 @@ const AppNavigation = () => {
       } = await appState();
 
       if (isRegistered) {
-        console.log(isRegistered);
         dispatch(setEmail(email));
         dispatch(setUsername(username));
         dispatch(setPhoneNumber(phoneNumber));
@@ -80,7 +79,6 @@ const AppNavigation = () => {
 
   const onLoadRoutes = useCallback(async () => {
     if (appIsReady) {
-      console.log(route);
       await SplashScreen.hideAsync();
     }
   }, [appIsReady]);

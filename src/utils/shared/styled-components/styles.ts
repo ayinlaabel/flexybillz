@@ -13,6 +13,7 @@ import { InputProp } from "../../../components/input/interface";
 
 export const Container: React.FC<ContainerProps> = styled.View`
   ${({ flex }: any) => (flex ? `flex: ${flex}` : null)};
+  ${({ zIndex }: any) => (zIndex ? `z-index: ${zIndex}` : null)};
   ${({ position }: any) => (position ? `position: ${position}` : null)};
   ${({ top }: any) => (top ? `top: ${top}` : null)};
   ${({ bottom }: any) => (bottom ? `bottom: ${bottom}` : null)};
@@ -130,7 +131,7 @@ export const DefaultTextInput: React.FC<InputProp> = styled.TextInput`
     width ? (typeof width === typeof 0 ? wp(width) : width) : "100%"};
   ${({ px }: any) => (px ? `padding-right: ${px}; padding-left:${px};` : null)};
   ${({ textAlign }: any) => (textAlign ? `text-align: ${textAlign}` : null)};
-  ${({ size }: any) => (size ? `font-size: ${size}` : null)};
+  ${({ size }: any) => (size ? `font-size: ${size}` : `font-size: 18px`)};
   ${({ fontFamily }: any) =>
     fontFamily ? `font-family: ${fontFamily}` : null};
 `;
