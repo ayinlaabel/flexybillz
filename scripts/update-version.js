@@ -11,7 +11,7 @@ try {
     const response = fs.writeFileSync(versionFile, JSON.stringify(currentVersion));
     console.log('Done:', response);
 
-    const gitCommit = `git config user.email kraneabel@gmail.com; git commit -am "[skip ci] update build number to: ${currentVersion.build}"; sleep 2; git push`
+    const gitCommit = `git config user.email kraneabel@gmail.com; git commit -am --continue "[skip ci] update build number to: ${currentVersion.build}"; sleep 2; git push`
     console.log('committing the update with command:', gitCommit);
     exec(gitCommit, (error, stdout, stderr) => {
         if (error !== null) {
