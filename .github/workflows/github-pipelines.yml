@@ -16,28 +16,28 @@ jobs:
         node-version: [16]
 
     steps:
-    - name: Checkout code
-      uses: actions/checkout@v2
+      - name: Checkout code
+        uses: actions/checkout@v2
 
-    - name: Setup Node.js
-      uses: actions/setup-node@v3
-      with:
-        node-version: ${{ matrix.node-version }}
+      - name: Setup Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: ${{ matrix.node-version }}
 
-    - name: Install dependencies
-      run: npm install
+      - name: Install dependencies
+        run: npm install
 
-    - name: Update version
-      run: npm run update-version
+      # - name: Update version
+      #   run: npm run update-version
 
-    - name: Run CI for Dev
-      run: npm run ci:dev:simulator && npm run ci:dev
-      if: github.event_name == 'push' && github.ref == 'refs/heads/develop'
+      - name: Run CI for Dev
+        run: npm run ci:dev:simulator && npm run ci:dev
+        if: github.event_name == 'push' && github.ref == 'refs/heads/develop'
 
-    - name: Run CI for UAT
-      run: npm run ci:uat
-      if: github.event_name == 'push' && github.ref == 'refs/heads/uat'
+      - name: Run CI for UAT
+        run: npm run ci:uat
+        if: github.event_name == 'push' && github.ref == 'refs/heads/uat'
 
-    - name: Run CI for Prod
-      run: npm run ci:prod
-      if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+      - name: Run CI for Prod
+        run: npm run ci:prod
+        if: github.event_name == 'push' && github.ref == 'refs/heads/main'
