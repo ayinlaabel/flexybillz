@@ -27,8 +27,8 @@ jobs:
       - name: Install dependencies
         run: npm install
 
-      # - name: Update version
-      #   run: npm run update-version
+      - name: Update version
+        run: npm run update-version
 
       - name: Run CI for Dev
         run: npm run ci:dev:simulator && npm run ci:dev

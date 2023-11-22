@@ -15,10 +15,13 @@
     "build:prod:android": "npx eas-cli@3.13.3 build --profile production --platform android",
     "build:prod:ios": "npx eas-cli@3.13.3 build --profile production --platform ios",
     "ci:dev": "npx eas-cli@3.13.3 build --profile development --platform all --no-wait --non-interactive",
+    "ci:dev:simulator": "npx eas-cli@3.13.3 build --profile development-simulator --platform ios --no-wait --non-interactive",
     "ci:uat": "npx eas-cli@3.13.3 build --profile uat --platform all --no-wait --non-interactive",
     "ci:prod": "npx eas-cli@3.13.3 build --profile production --platform all --no-wait --non-interactive",
     "eas-build-pre-install": "node ./scripts/pre-install.js",
-    "eas-build-on-success": "node ./scripts/post-install.js"
+    "eas-build-on-success": "node ./scripts/post-install.js",
+    "test": "jest",
+    "update-version": "node ./scripts/update-version.js"
   },
   "dependencies": {
     "@react-native-async-storage/async-storage": "1.18.2",
