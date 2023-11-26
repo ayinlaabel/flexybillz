@@ -34,7 +34,7 @@ jobs:
         run: npm run update-version
 
       - name: Set Expo Token
-        run: echo "EXPO_TOKEN=${{ secrets.GITHUB_EXPO_TOKEN }}" >> $GITHUB_ENV
+        run: echo "EXPO_TOKEN=${{ secrets.EXPO_TOKEN }}" >> $GITHUB_ENV
 
       - name: Set Token
         run: echo "TOKEN=${{ secrets.GITHUB_TOKEN }}" >> $GITHUB_ENV
@@ -42,7 +42,7 @@ jobs:
       - name: Debug Expo Token
         run: echo "EXPO_TOKEN=${EXPO_TOKEN}"
 
-      - name: Debug Expo Token
+      - name: Debug Token
         run: echo "TOKEN=${TOKEN}"
 
       - name: Run CI for Dev
@@ -52,7 +52,7 @@ jobs:
         if: github.event_name == 'push' && github.ref == 'refs/heads/develop'
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          GITHUB_EXPO_TOKEN: ${{ secrets.GITHUB_EXPO_TOKEN }}
+          GITHUB_EXPO_TOKEN: ${{ secrets.EXPO_TOKEN }}
 
       - name: Run CI for UAT
         run: |
