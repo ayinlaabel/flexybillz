@@ -12,7 +12,17 @@
       },
       "env": {
         "APP_ENV": "development"
-        
+      },
+      "channel": "development"
+    },
+    "development-simulator": {
+      "developmentClient": true,
+      "distribution": "internal",
+      "ios": {
+        "simulator": true
+      },
+      "env": {
+        "APP_ENV": "development"
       },
       "channel": "development"
     },
