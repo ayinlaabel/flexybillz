@@ -9,12 +9,7 @@ import {
   Paragraph,
 } from "../../utils/shared/styled-components";
 import DefaultInput from "../../components/input/DefaultInput";
-import {
-  arrowDownIcon,
-  backIcon,
-  countryIcon,
-  radioIcon,
-} from "../../assets/icons";
+import { arrowDownIcon, backIcon, countryIcon } from "../../assets/icons";
 import { colors, storeData } from "../../utils";
 import { SoildButton } from "../../components/button";
 import { AppStackParamsList } from "../../navigation/app-navigation/appRoutes";
@@ -24,23 +19,32 @@ import Icon from "react-native-vector-icons/Fontisto";
 import { useFormik } from "formik";
 import { loginSchema } from "./interface";
 import { userLoginSchema } from "../../schema/login.schema";
-import { userLogin } from "../../networking/getQuery";
+import {
+  getUserByUserName,
+  sendTokenEmail,
+  userLogin,
+} from "../../networking/getQuery";
 import { useDispatch } from "react-redux";
-import { setEmail, setToken, setUsername } from "../../redux";
+import { setEmail, setToken, setUser, setUsername } from "../../redux";
 import { appStateType } from "../../constants/app-state/appState";
 import { removeData } from "../../utils/shared/helpers";
-import { setFirstName } from "../../redux/slices/userSlice";
 import { useToast } from "react-native-toast-notifications";
+import ResetPasswordModal from "./reset-password-modal/ResetPasswordModal";
+import { SCREEN_HEIGHT } from "@constants/index";
 
 const Login = () => {
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [rememberMe, setRememberMe] = useState<boolean>();
+  const [isReset, setIsReset] = useState<boolean>(false);
+  const [showModal, setShowModal] = useState<boolean>(false);
   const { goBack, navigate, replace } =
     useNavigation<StackNavigationProp<AppStackParamsList>>();
 
   const handleGoBack = () => {
     goBack();
   };
+
+  
 
   const dispatch = useDispatch();
   const toast = useToast();
@@ -58,28 +62,54 @@ const Login = () => {
       }
 
       if (data.data.isWalletPin) {
-        setIsLoading(false);
-        dispatch(setEmail(data.data.email));
-        dispatch(setUsername(data.data.userId));
-        dispatch(setToken(data.data.token.token));
-        await storeData(appStateType.isLogin, "true");
-        await storeData("firstName", data.data.firstName);
-        await removeData(appStateType.isLogOut);
-        replace("Dashboard");
+        const { data: userInfo } = await getUserByUserName(
+          data.data.userId,
+          data.data.token.token
+        );
+
+        if (!userInfo.success) {
+          setIsLoading(false);
+          toast.show(userInfo.message, { type: "custom_danger" });
+        } else {
+          setIsLoading(false);
+          dispatch(setEmail(data.data.email));
+          dispatch(setUsername(data.data.userId));
+          dispatch(setToken(data.data.token.token));
+          await storeData(appStateType.isLogin, "true");
+          await storeData("user", JSON.stringify(userInfo.data));
+          await storeData("firstName", data.data.firstName);
+          await removeData(appStateType.isLogOut);
+          replace("Dashboard");
+        }
       } else {
-        setIsLoading(false);
-        dispatch(setEmail(data.data.email));
-        dispatch(setUsername(data.data.userId));
-        dispatch(setToken(data.data.token.token));
-        await storeData("firstName", data.data.firstName);
-        await storeData(appStateType.isLogin, "true");
-        await removeData(appStateType.isVerified);
-        navigate("SecurePin");
+        const { data: userInfo } = await getUserByUserName(
+          data.data.userId,
+          data.data.token.token
+        );
+
+        if (!userInfo.success) {
+          setIsLoading(false);
+          toast.show(userInfo.message, { type: "custom_danger" });
+        } else {
+          setIsLoading(false);
+          dispatch(setEmail(data.data.email));
+          dispatch(setUsername(data.data.userId));
+          dispatch(setToken(data.data.token.token));
+          dispatch(setUser(userInfo.data));
+          await storeData("firstName", data.data.firstName);
+          await storeData("user", JSON.stringify(userInfo.data));
+          await storeData(appStateType.isLogin, "true");
+          await removeData(appStateType.isVerified);
+          navigate("SecurePin");
+        }
       }
     },
   });
   return (
-    <Container background={colors.whiteColor}>
+    <Container
+      background={colors.whiteColor}
+      height={JSON.stringify(SCREEN_HEIGHT)}
+    >
       <StatusBar barStyle="dark-content" translucent={true} />
       <SafeAreaView />
       <Container px="20px">
@@ -233,7 +263,10 @@ const Login = () => {
             Login
           </SoildButton>
           <Container my="15px" items="flex-end">
-            <TouchableOpacity activeOpacity={0.9} onPress={() => {}}>
+            <TouchableOpacity
+              activeOpacity={0.9}
+              onPress={() => setShowModal(true)}
+            >
               <Paragraph
                 mb="5px"
                 color={colors.brandColor}
@@ -268,6 +301,10 @@ const Login = () => {
       <Container width="100%">
         <LoginCarousel />
       </Container>
+      <ResetPasswordModal
+        showContent={showModal}
+        handleCloseModal={setShowModal}
+      />
     </Container>
   );
 };

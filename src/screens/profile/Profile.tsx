@@ -39,7 +39,7 @@ import { postSetFingerPrint } from "@networking/getQuery";
 import { useToast } from "react-native-toast-notifications";
 
 const Profile = () => {
-  const [hideBalance, setHideBalance] = useState<boolean>(false);
+  const [hideBalance, setHideBalance] = useState<boolean>(true);
   const [hasPushNotification, setHasPushNotification] =
     useState<boolean>(false);
 
@@ -276,7 +276,7 @@ const Profile = () => {
             </Paragraph>
             <TouchableOpacity onPress={() => setHideBalance(!hideBalance)}>
               <Entypo
-                name={hideBalance ? "eye" : "eye-with-line"}
+                name={hideBalance ? "eye-with-line" : "eye"}
                 color={colors.whiteColor}
                 size={14}
               />

@@ -42,6 +42,7 @@ export interface ContainerProps {
   children?: any;
   overflow?: "visible" | "hidden" | undefined;
   zIndex?: number;
+  style?: ViewStyle;
 }
 
 export interface TextProps {

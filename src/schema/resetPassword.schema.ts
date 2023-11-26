@@ -7,4 +7,7 @@ const resetPasswordSchema = object({
     .oneOf([ref("newPassword")], "Confirm Password must match New Password."),
 });
 
+export const resetPasswordEmailSchema = object({
+  email: string().email().required("Email is required"),
+});
 export default resetPasswordSchema;

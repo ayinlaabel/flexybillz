@@ -40,9 +40,12 @@ import { StackNavigationProp } from "@react-navigation/stack";
 import { AppStackParamsList } from "../../navigation/app-navigation/appRoutes";
 import { SCREEN_HEIGHT, SCREEN_WIDTH } from "../../constants";
 import { AuthTabParamsList } from "@navigation/auth-navigation/authRoute";
+
 const Dashboard = () => {
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [transaction, setTransaction] = useState<any[]>();
+  const [hideBalance, setHideBalance] = useState<boolean>(true);
+  const [user, setUser] = useState<any>();
 
   const { navigate, replace } =
     useNavigation<StackNavigationProp<AppStackParamsList>>();
@@ -51,24 +54,19 @@ const Dashboard = () => {
 
   const token = useSelector(selectToken);
   const username = useSelector(selectUsername);
-  const user = useSelector(selectUser);
 
   const dispatch = useDispatch();
 
   useEffect(() => {
-    setIsLoading(true);
-    const getUserDetails = async () => {
-      const { data } = await getUserByUserName(username, token);
-      if (data.success) {
-        dispatch(setUser(data.data));
-        console.log(data.data);
-        setIsLoading(false);
-      } else {
+    const getUser = async () => {
+      const user = await getData("user");
+      if (!user) {
         replace("Login");
+      } else {
+        setUser(JSON.parse(user));
       }
     };
-
-    getUserDetails();
+    getUser();
   }, []);
 
   return (
@@ -150,9 +148,13 @@ const Dashboard = () => {
             <Container>
               <Container flexDirection="row" items="center">
                 <Paragraph color={colors.whiteColor}>Wallet Balance</Paragraph>
-                <TouchableOpacity>
+                <TouchableOpacity onPress={() => setHideBalance(!hideBalance)}>
                   <Container ml="10px">
-                    <Icon name="eye" size={20} color={colors.whiteColor} />
+                    <Entypo
+                      name={hideBalance ? "eye-with-line" : "eye"}
+                      color={colors.whiteColor}
+                      size={20}
+                    />
                   </Container>
                 </TouchableOpacity>
               </Container>
@@ -162,6 +164,8 @@ const Dashboard = () => {
                     <Container py="10px" items="center">
                       <ActivityIndicator color={colors.whiteColor} />
                     </Container>
+                  ) : hideBalance ? (
+                    "***"
                   ) : (
                     convertToNaira(user?.balance)
                   )}

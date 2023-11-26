@@ -9,6 +9,7 @@ const initialState = {
   initialRoute: null,
   firstName: null,
   transaction: null,
+  fromRoute: null,
 };
 
 export const userSlice = createSlice({
@@ -39,6 +40,9 @@ export const userSlice = createSlice({
     setTransaction: (state, action) => {
       state.transaction = action.payload;
     },
+    setFromRoute: (state, action) => {
+      state.fromRoute = action.payload;
+    },
   },
 });
 
@@ -51,6 +55,7 @@ export const {
   setInitialRoute,
   setFirstName,
   setTransaction,
+  setFromRoute,
 } = userSlice.actions;
 
 /**
@@ -66,5 +71,6 @@ export const selectUsername = (state: any) => state.user.username;
 export const selectInitialRoute = (state: any) => state.user.initialRoute;
 export const selectFirstName = (state: any) => state.user.firstName;
 export const selectTransaction = (state: any) => state.user.transaction;
+export const selectFromRoute = (state: any) => state.user.fromRoute;
 
 export default userSlice.reducer;

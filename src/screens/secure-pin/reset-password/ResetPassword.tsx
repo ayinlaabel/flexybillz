@@ -10,7 +10,7 @@ import Octicons from "react-native-vector-icons/Octicons";
 import { SCREEN_HEIGHT } from "@constants/index";
 import DefaultInput from "@components/input/DefaultInput";
 import { useSelector } from "react-redux";
-import { selectUser } from "@redux/index";
+import { selectEmail, selectFromRoute, selectUser } from "@redux/index";
 import { images } from "@assets/images";
 import { useFormik } from "formik";
 import { SoildButton } from "@components/button";
@@ -20,6 +20,7 @@ import { useToast } from "react-native-toast-notifications";
 import { useNavigation } from "@react-navigation/core";
 import { StackNavigationProp } from "@react-navigation/stack";
 import { AuthTabParamsList } from "@navigation/auth-navigation/authRoute";
+import { AppStackParamsList } from "@navigation/app-navigation/appRoutes";
 
 const ResetPassword = () => {
   const [isLoading, setIsLoading] = useState<boolean>(false);
@@ -27,7 +28,11 @@ const ResetPassword = () => {
 
   const { replace, goBack, navigate } =
     useNavigation<StackNavigationProp<AuthTabParamsList>>();
+  const { replace: appReplace } =
+    useNavigation<StackNavigationProp<AppStackParamsList>>();
   const user = useSelector(selectUser);
+  const email = useSelector(selectEmail);
+  const fromRoute = useSelector(selectFromRoute);
 
   const toast = useToast();
 
@@ -36,7 +41,7 @@ const ResetPassword = () => {
   };
   const handleResendToken = async () => {
     setIsReset(true);
-    const { data } = await sendTokenEmail({ email: user.email });
+    const { data } = await sendTokenEmail({ email: email });
 
     if (!data.success) {
       toast.show(data.message, { type: "custom_danger" });
@@ -48,7 +53,7 @@ const ResetPassword = () => {
 
   const formik = useFormik({
     initialValues: {
-      email: user.email,
+      email: email,
       newPassword: "",
       confirmPassword: "",
       token: "",
@@ -62,8 +67,12 @@ const ResetPassword = () => {
         toast.show(data.message, { type: "custom_danger" });
         setIsLoading(false);
       } else {
-        setIsLoading(false);
-        navigate("Profile");
+        if (!fromRoute) {
+          setIsLoading(false);
+          navigate("Profile");
+        } else {
+          appReplace("Login");
+        }
       }
     },
   });
@@ -130,7 +139,7 @@ const ResetPassword = () => {
               overflow="hidden"
             >
               <ImageTag
-                source={user.photoUrl ? { uri: user.photoUrl } : images.avatar}
+                source={user?.photoUrl ? { uri: user.photoUrl } : images.avatar}
               />
             </Container>
           </Container>

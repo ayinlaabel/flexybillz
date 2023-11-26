@@ -1,10 +1,13 @@
 import React, { useEffect } from "react";
-import { NavigationContainer } from "@react-navigation/native";
 import AppNavigation from "./app-navigation/AppNavigation";
 import { appState } from "../constants/app-state/appState";
 import { useDispatch } from "react-redux";
 import { setEmail, setUsername } from "../redux";
-import { setInitialRoute, setPhoneNumber } from "../redux/slices/userSlice";
+import {
+  setInitialRoute,
+  setPhoneNumber,
+  setUser,
+} from "../redux/slices/userSlice";
 
 const Navigation = () => {
   const dispatch = useDispatch();
@@ -19,6 +22,7 @@ const Navigation = () => {
         isLogin,
         isRegistered,
         isVerified,
+        user,
       } = await appState();
 
       if (isRegistered) {
@@ -27,9 +31,10 @@ const Navigation = () => {
         dispatch(setPhoneNumber(phoneNumber));
         dispatch(setInitialRoute("Verification"));
       }
-      if (isLogin) {
+      if (isLogin && user) {
         dispatch(setUsername(username));
-        dispatch(setInitialRoute("LoginWithPin"));
+        dispatch(setInitialRoute("Dashboard"));
+        dispatch(setUser(JSON.parse(user)));
       }
       if (isLogOut) {
         dispatch(setInitialRoute("Login"));

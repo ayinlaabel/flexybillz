@@ -16,6 +16,7 @@ export const appState = async () => {
   const username = await getData("username");
   const phoneNumber = await getData("phoneNumber");
   const token = await getData("token");
+  const user = await getData("user");
 
   if (isRegistered) {
     return {
@@ -36,6 +37,7 @@ export const appState = async () => {
       username,
       phoneNumber,
       isVerified,
+      user,
     };
   } else if (isLogin) {
     return {
@@ -43,7 +45,8 @@ export const appState = async () => {
       username,
       phoneNumber,
       isLogin,
-      token
+      token,
+      user,
     };
   } else {
     return {
@@ -51,6 +54,7 @@ export const appState = async () => {
       username,
       phoneNumber,
       isRegistered,
+      user,
     };
   }
 };

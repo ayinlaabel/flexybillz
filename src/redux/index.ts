@@ -10,6 +10,8 @@ import {
   selectUser,
   selectUsername,
   selectInitialRoute,
+  selectFromRoute,
+  setFromRoute,
 } from "./slices/userSlice";
 
 export {
@@ -24,4 +26,6 @@ export {
   selectUser,
   selectUsername,
   selectInitialRoute,
+  selectFromRoute,
+  setFromRoute,
 };
