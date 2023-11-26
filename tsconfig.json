@@ -9,6 +9,7 @@
       "@assets/*": ["./src/assets/*"],
       "@screens/*": ["./src/screens/*"],
       "@components/*": ["./src/components/*"],
+      "@schema/*": ["./src/schema/*"],
       "@constants/*": ["./src/constants/*"],
       "@utils/*": ["./src/utils/*"],
       "@navigation/*": ["./src/navigation/*"],

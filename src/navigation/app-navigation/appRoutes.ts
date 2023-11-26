@@ -15,9 +15,13 @@ import FundWallet from "@screens/fund-wallet/FundWallet";
 import GetStarted from "@screens/get-started/GetStarted";
 import Login from "@screens/login/Login";
 import LoginWithPin from "@screens/login/LoginWithPin";
+import EditProfile from "@screens/profile/edit-profile/EditProfile";
 import Registration from "@screens/register/Registration";
 import SecurePin from "@screens/secure-pin/SecurePin";
 import VerifySecurePin from "@screens/secure-pin/VerifySecurePin";
+import ChangePassword from "@screens/secure-pin/change-password/ChangePassword";
+import ChangePin from "@screens/secure-pin/change-pin/ChangePin";
+import ResetPassword from "@screens/secure-pin/reset-password/ResetPassword";
 import Airtime from "@screens/services/buy-airtime/Airtime";
 import BuyData from "@screens/services/buy-data/BuyData";
 import Success from "@screens/services/success/Success";
@@ -39,6 +43,11 @@ export type AppStackParamsList = {
   SuccessAirtime: { amount: "" };
   Data: undefined;
   FundWallet: undefined;
+  EditProfile: undefined;
+  ChangePassword: undefined;
+  ResetPassword: undefined;
+  ChangePin: undefined;
+  ResetPin: undefined;
 };
 
 type StackNavigatorOptions<ParamList extends ParamListBase> =
@@ -130,5 +139,21 @@ export const appRoutes: AppRouteStackType = [
   {
     name: "FundWallet",
     component: FundWallet,
+  },
+  {
+    name: "EditProfile",
+    component: EditProfile,
+  },
+  {
+    name: "ChangePassword",
+    component: ChangePassword,
+  },
+  {
+    name: "ChangePin",
+    component: ChangePin,
+  },
+  {
+    name: "ResetPassword",
+    component: ResetPassword,
   },
 ];

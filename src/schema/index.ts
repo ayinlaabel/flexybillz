@@ -1,3 +1,4 @@
 import { registrationSchema } from "./register.schema";
 import { confirmPinSchema } from "./confirmPin.schema";
-export { registrationSchema, confirmPinSchema };
+import changePasswordSchema from "./changePassword.schema";
+export { registrationSchema, confirmPinSchema, changePasswordSchema };

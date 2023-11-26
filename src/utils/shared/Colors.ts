@@ -25,7 +25,9 @@ const colors = {
   lightGrayColor: "#888A89",
   lightGrayColor50: "#888A8950",
   dangerColor: "#f32013",
+  dangerColor50: "#f3201350",
   successColor: "#198754",
+  successColor50: "#19875450",
   dark: {},
   light: {},
 };

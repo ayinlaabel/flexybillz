@@ -161,14 +161,9 @@ const BuyData = () => {
       </TouchableOpacity>
     );
   };
-  useEffect(() => {
-    setIsLoading(true);
-    const getData = async () => {
-      const provider: AirtimeProps | null = await getProvider(phone);
-      if (provider !== null || undefined) {
-        setSelectedNetwork(provider);
-      }
 
+  useEffect(() => {
+    const getData = async () => {
       const { data } = await getAvailableData(
         selectedNetwork?.data_keys,
         token
@@ -179,7 +174,34 @@ const BuyData = () => {
       } else {
         setIsLoading(false);
 
-        setAvailableData(data.data);
+        let sortedData = () =>
+          data.data.sort((a: BuyDataProps, b: BuyDataProps) => {
+            let durationA = a.duration;
+            let priceA = a.variation_amount;
+            let durationB = b.duration;
+            let priceB = b.variation_amount;
+
+            if (priceA < priceB) {
+              return 1;
+            }
+
+            if (priceA > priceB) {
+              return -1;
+            }
+            return 0;
+          });
+        setAvailableData(sortedData);
+      }
+    };
+    getData();
+  }, [selectedNetwork]);
+
+  useEffect(() => {
+    setIsLoading(true);
+    const getData = async () => {
+      const provider: AirtimeProps | null = await getProvider(phone);
+      if (provider !== null || undefined) {
+        setSelectedNetwork(provider);
       }
     };
 

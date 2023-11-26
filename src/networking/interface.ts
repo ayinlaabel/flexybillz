@@ -59,3 +59,27 @@ export interface BuyDataProps {
   billersCode: string;
   variation_code: string;
 }
+
+export interface changePasswordProps {
+  userName: string;
+  currentPassword: string;
+  newPassword: string;
+  confirmNewPassword: string;
+}
+export interface changeWalletPinProps {
+  userName: string;
+  oldWalletPin: string;
+  newWalletPin: string;
+}
+
+export interface ISetFingerPrintProps {
+  userId: string;
+  isFingerPrint: boolean;
+}
+
+export interface IResetPasswordProps {
+  email: string;
+  newPassword: string;
+  confirmPassword: string;
+  token: string;
+}

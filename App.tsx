@@ -8,6 +8,7 @@ import { ToastProvider } from "react-native-toast-notifications";
 import { Container, Paragraph } from "./src/utils/shared/styled-components";
 import { colors } from "./src/utils";
 import AntDesign from "react-native-vector-icons/AntDesign";
+import CacheManager from "react-native-cached-image";
 
 const App = () => {
   const [loaded] = useFonts(customFonts);
@@ -15,6 +16,15 @@ const App = () => {
   if (!loaded) {
     return null;
   }
+  // useEffect(() => {
+  //   const clearImageCache = async () => {
+  //     // await CacheManager.clearCache();
+  //     // Force a re-render to reflect the changes
+  //     // You might need to refresh the state or re-fetch the data
+  //   };
+
+  //   clearImageCache();
+  // }, []);
   return (
     <Provider store={store}>
       <ToastProvider

@@ -38,6 +38,8 @@ const DefaultInput = ({
   defaultValue,
   value,
   size,
+  style,
+  props,
 }: InputProp) => {
   const [text, setText] = useState("Show");
   const [secure, setSecure] = useState<boolean>(
@@ -115,6 +117,8 @@ const DefaultInput = ({
         value={value}
         defaultValue={defaultValue}
         size={size}
+        style={style}
+        {...props}
       />
       {inputType === InputType.PASSWORD && (
         <Container height="100%" width={"15%"}>

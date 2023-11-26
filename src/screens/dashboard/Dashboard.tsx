@@ -4,6 +4,7 @@ import {
   TouchableOpacity,
   Text,
   ActivityIndicator,
+  StatusBar,
 } from "react-native";
 import {
   Container,
@@ -24,7 +25,7 @@ import services from "../../constants/data/services";
 import ServiceCard from "../../components/service-card/ServiceCard";
 import { convertToNaira, getData } from "../../utils/shared/helpers";
 import Entypo from "react-native-vector-icons/Entypo";
-import { StatusBar } from "expo-status-bar";
+// import { StatusBar } from "expo-status-bar";
 import { useDispatch, useSelector } from "react-redux";
 import {
   selectToken,
@@ -38,12 +39,15 @@ import { useNavigation } from "@react-navigation/core";
 import { StackNavigationProp } from "@react-navigation/stack";
 import { AppStackParamsList } from "../../navigation/app-navigation/appRoutes";
 import { SCREEN_HEIGHT, SCREEN_WIDTH } from "../../constants";
+import { AuthTabParamsList } from "@navigation/auth-navigation/authRoute";
 const Dashboard = () => {
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [transaction, setTransaction] = useState<any[]>();
 
   const { navigate, replace } =
     useNavigation<StackNavigationProp<AppStackParamsList>>();
+  const { navigate: authNavigate, replace: authReplace } =
+    useNavigation<StackNavigationProp<AuthTabParamsList>>();
 
   const token = useSelector(selectToken);
   const username = useSelector(selectUsername);
@@ -57,6 +61,7 @@ const Dashboard = () => {
       const { data } = await getUserByUserName(username, token);
       if (data.success) {
         dispatch(setUser(data.data));
+        console.log(data.data);
         setIsLoading(false);
       } else {
         replace("Login");
@@ -66,23 +71,14 @@ const Dashboard = () => {
     getUserDetails();
   }, []);
 
-  // if (isLoading) {
-  //   return (
-  //     <Container
-  //       height={JSON.stringify(SCREEN_HEIGHT)}
-  //       width={JSON.stringify(SCREEN_WIDTH)}
-  //       items="center"
-  //       justify="center"
-  //     >
-  //       <ActivityIndicator size={20} color={colors.brandColor} />
-  //     </Container>
-  //   );
-  // }
-
   return (
     <Container>
       <SafeAreaView />
-      <StatusBar backgroundColor="transparent" style="dark" />
+      <StatusBar
+        translucent
+        backgroundColor="transparent"
+        barStyle={"dark-content"}
+      />
       <Container
         height={60}
         pr="10px"
@@ -95,24 +91,35 @@ const Dashboard = () => {
         justify="space-between"
       >
         <Container flexDirection="row" items="center">
-          <Container
-            height={40}
-            width={35}
-            rightBottomRadius="100"
-            rightTopRadius="100"
-            leftBottomRadius="100"
-            leftTopRadius="100"
-            mr="10px"
-            overflow="hidden"
+          <TouchableOpacity
+            activeOpacity={0.9}
+            onPress={() => authNavigate("Profile")}
           >
-            <ImageTag source={images.avatar} />
-          </Container>
+            <Container
+              height={40}
+              width={35}
+              rightBottomRadius="100"
+              rightTopRadius="100"
+              leftBottomRadius="100"
+              leftTopRadius="100"
+              mr="10px"
+              overflow="hidden"
+            >
+              <ImageTag
+                source={
+                  user?.photoUrl
+                    ? { uri: user.photoUrl, cache: "only-if-cached" }
+                    : images.avatar
+                }
+              />
+            </Container>
+          </TouchableOpacity>
           <Paragraph
             size="18px"
             fontFamily="PoppinSemiBold"
             color={colors.brandColor}
           >
-            Hi, {user?.firstName}
+            Hi, {user?.firstName ? user?.firstName : "Annonymos"}
           </Paragraph>
         </Container>
         <Container flexDirection="row" gap="10">

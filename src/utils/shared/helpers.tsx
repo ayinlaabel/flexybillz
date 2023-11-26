@@ -1,5 +1,7 @@
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { MockNetworkData } from "../../__mock__/services/service";
+import { appStateType } from "@constants/app-state/appState";
+import { useNavigation } from "@react-navigation/core";
 
 export const logger = (...value: any[]) => {
   if (__DEV__) {

@@ -24,6 +24,7 @@ export interface InputProp extends InputContainerProps, TextInputProps {
   onChangeText?: (props: any) => any;
   maxLength?: number;
   ref?: (props: any) => any;
+  props?: TextInputProps;
 }
 
 export interface OtpProp {

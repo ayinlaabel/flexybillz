@@ -73,3 +73,5 @@ export const MockNetworkData: AirtimeProps[] = [
     data_name: "airtel",
   },
 ];
+
+export const MockElectricityProviders = [];

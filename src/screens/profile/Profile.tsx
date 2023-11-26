@@ -1,6 +1,10 @@
 import React, { useState } from "react";
-import { TouchableOpacity, FlatList, ScrollView } from "react-native";
-import { StatusBar } from "expo-status-bar";
+import {
+  TouchableOpacity,
+  FlatList,
+  ScrollView,
+  StatusBar,
+} from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import {
   Container,
@@ -16,50 +20,166 @@ import { supportIconWhite } from "@assets/icons";
 import Feather from "react-native-vector-icons/Feather";
 import Entypo from "react-native-vector-icons/Entypo";
 import Ionicons from "react-native-vector-icons/Ionicons";
-import { convertToNaira } from "@utils/shared/helpers";
+import {
+  convertToNaira,
+  logger,
+  removeData,
+  storeData,
+} from "@utils/shared/helpers";
 import { SoildButton } from "@components/button";
 import { AccountSettingProps, IconTypeProps, SettingName } from "./interface";
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
 import SimpleLineIcons from "react-native-vector-icons/SimpleLineIcons";
 import { MockAccountSettings } from "@mocks/settings/settings";
+import { useNavigation } from "@react-navigation/core";
+import { StackNavigationProp } from "@react-navigation/stack";
+import { AppStackParamsList } from "@navigation/app-navigation/appRoutes";
+import { appStateType } from "@constants/app-state/appState";
+import { postSetFingerPrint } from "@networking/getQuery";
+import { useToast } from "react-native-toast-notifications";
 
 const Profile = () => {
   const [hideBalance, setHideBalance] = useState<boolean>(false);
-  const [hasFigerPrint, setHasFingerPrint] = useState<boolean>(false);
   const [hasPushNotification, setHasPushNotification] =
     useState<boolean>(false);
 
+  const toast = useToast();
+
   const user = useSelector(selectUser);
+  const [hasFigerPrint, setHasFingerPrint] = useState<boolean>(
+    user?.isFingerPrint
+  );
+
+  const { replace, navigate } =
+    useNavigation<StackNavigationProp<AppStackParamsList>>();
+
+  const handleSignOut = async () => {
+    await removeData(appStateType.isLogin);
+    await storeData(appStateType.isLogOut, "true");
+    replace("Login");
+  };
 
   const handleSetPushNotification = () => {
     setHasPushNotification(!hasPushNotification);
   };
 
-  const handleSetFingerPrint = () => {
-    setHasFingerPrint(!hasFigerPrint);
+  const handleSetFingerPrint = async () => {
+    const { data } = await postSetFingerPrint({
+      userId: user.userName,
+      isFingerPrint: !hasFigerPrint,
+    });
+
+    if (!data.success) {
+      toast.show(data.message, { type: "custom_danger" });
+    } else {
+      toast.show("Finger Print set successfully.", { type: "custom_success" });
+      setHasFingerPrint(!hasFigerPrint);
+    }
   };
 
   const __renderAccountSettings = ({ item }: AccountSettingProps) => {
-    const handleNavigation = () => {};
+    const handleNavigation = () => {
+      navigate(item.path);
+    };
     const handleMatchIcon = () => {
       switch (item.name) {
         case SettingName.PUSHNOTIFICATION:
-          return (
-            <MaterialCommunityIcons
-              name={hasPushNotification ? "toggle-switch" : item.icon}
-              color={
-                hasPushNotification ? colors.brandColor : colors.blackColor50
-              }
-              size={30}
-            />
+          return hasPushNotification ? (
+            <Container justify="center">
+              <Container
+                height={20}
+                width={50}
+                background={colors.brandColor90}
+                rightBottomRadius="100"
+                rightTopRadius="100"
+                leftBottomRadius="100"
+                leftTopRadius="100"
+              />
+              <Container
+                height={30}
+                width={27}
+                background={colors.brandColor}
+                rightBottomRadius="100"
+                rightTopRadius="100"
+                leftBottomRadius="100"
+                leftTopRadius="100"
+                shadow
+                position="absolute"
+                right="0"
+              />
+            </Container>
+          ) : (
+            <Container justify="center">
+              <Container
+                height={20}
+                width={50}
+                background={colors.lightGrayColor}
+                rightBottomRadius="100"
+                rightTopRadius="100"
+                leftBottomRadius="100"
+                leftTopRadius="100"
+              />
+              <Container
+                height={30}
+                width={27}
+                background={colors.whiteColor}
+                rightBottomRadius="100"
+                rightTopRadius="100"
+                leftBottomRadius="100"
+                leftTopRadius="100"
+                shadow
+                position="absolute"
+              />
+            </Container>
           );
         case SettingName.SETFINGERPRINT:
-          return (
-            <MaterialCommunityIcons
-              name={hasFigerPrint ? "toggle-switch" : item.icon}
-              color={hasFigerPrint ? colors.brandColor : colors.blackColor50}
-              size={30}
-            />
+          return hasFigerPrint ? (
+            <Container justify="center">
+              <Container
+                height={20}
+                width={50}
+                background={colors.brandColor90}
+                rightBottomRadius="100"
+                rightTopRadius="100"
+                leftBottomRadius="100"
+                leftTopRadius="100"
+              />
+              <Container
+                height={30}
+                width={27}
+                background={colors.brandColor}
+                rightBottomRadius="100"
+                rightTopRadius="100"
+                leftBottomRadius="100"
+                leftTopRadius="100"
+                shadow
+                position="absolute"
+                right="0"
+              />
+            </Container>
+          ) : (
+            <Container justify="center">
+              <Container
+                height={20}
+                width={50}
+                background={colors.lightGrayColor}
+                rightBottomRadius="100"
+                rightTopRadius="100"
+                leftBottomRadius="100"
+                leftTopRadius="100"
+              />
+              <Container
+                height={30}
+                width={27}
+                background={colors.whiteColor}
+                rightBottomRadius="100"
+                rightTopRadius="100"
+                leftBottomRadius="100"
+                leftTopRadius="100"
+                shadow
+                position="absolute"
+              />
+            </Container>
           );
 
         default:
@@ -78,7 +198,7 @@ const Profile = () => {
               handleSetFingerPrint();
               break;
             default:
-              handleNavigation;
+              handleNavigation();
               break;
           }
         }}
@@ -102,8 +222,12 @@ const Profile = () => {
 
   return (
     <Container height="100%" pb="70px">
-      <StatusBar backgroundColor={colors.brandColor} style="light" />
       <SafeAreaView />
+      <StatusBar
+        translucent
+        backgroundColor={colors.brandColor}
+        barStyle="light-content"
+      />
       <Container
         background={colors.brandColor}
         width="100%"
@@ -126,10 +250,16 @@ const Profile = () => {
               overflow="hidden"
               mr="10px"
             >
-              <ImageTag source={images.avatar} />
+              <ImageTag
+                source={
+                  user?.photoUrl
+                    ? { uri: user.photoUrl, cache: "only-if-cached" }
+                    : images.avatar
+                }
+              />
             </Container>
             <Paragraph size="15px" color={colors.whiteColor}>
-              Hi, {user.firstName}
+              Hi, {user?.firstName}
             </Paragraph>
           </Container>
           <Container flexDirection="row" gap="10" items="center">
@@ -179,23 +309,7 @@ const Profile = () => {
           zIndex={99}
         >
           <Container flexDirection="row" items="center">
-            <Container
-              height="70%"
-              width={55}
-              background={colors.brandColor}
-              rightBottomRadius="5px"
-              rightTopRadius="5px"
-              leftBottomRadius="5px"
-              leftTopRadius="5px"
-              items="center"
-              justify="center"
-            >
-              <Ionicons
-                name="gift-outline"
-                size={35}
-                color={colors.whiteColor}
-              />
-            </Container>
+            <Ionicons name="gift" size={35} color={colors.brandColor} />
             <Container ml="10px">
               <Paragraph
                 size="18px"
@@ -306,7 +420,7 @@ const Profile = () => {
               rightTopRadius="100"
               leftBottomRadius="100"
               leftTopRadius="100"
-              onPress={() => {}}
+              onPress={handleSignOut}
             >
               Logout
             </SoildButton>
