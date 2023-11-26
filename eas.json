@@ -12,6 +12,7 @@
       },
       "env": {
         "APP_ENV": "development"
+        
       },
       "channel": "development"
     },

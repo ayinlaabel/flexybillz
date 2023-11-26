@@ -29,23 +29,32 @@ jobs:
 
       - name: Update version
         run: npm run update-version
+      
+       - name: Set Expo Token
+        run: echo "EXPO_TOKEN=${{ secrets.GITHUB_EXPO_TOKEN }}" >> $GITHUB_ENV
 
       - name: Run CI for Dev
-        run: npm run ci:dev:simulator && npm run ci:dev
+        run: |
+          export EXPO_TOKEN=${{ secrets.GITHUB_EXPO_TOKEN }}
+          npm run ci:dev:simulator && npm run ci:dev
         if: github.event_name == 'push' && github.ref == 'refs/heads/develop'
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           GITHUB_EXPO_TOKEN: ${{ secrets.GITHUB_EXPO_TOKEN }}
 
       - name: Run CI for UAT
-        run: npm run ci:uat
+        run: |
+          export EXPO_TOKEN=${{ secrets.GITHUB_EXPO_TOKEN }}
+          npm run ci:uat
         if: github.event_name == 'push' && github.ref == 'refs/heads/uat'
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           GITHUB_EXPO_TOKEN: ${{ secrets.GITHUB_EXPO_TOKEN }}
 
       - name: Run CI for Prod
-        run: npm run ci:prod
+        run: |
+          export EXPO_TOKEN=${{ secrets.GITHUB_EXPO_TOKEN }}
+          npm run ci:prod
         if: github.event_name == 'push' && github.ref == 'refs/heads/main'
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
