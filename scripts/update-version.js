@@ -14,8 +14,8 @@ try {
   );
   console.log("Done:", response);
 
-  const gitCommit = `git remote set-url origin https://ayinlaabel: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@github.com/DIGITAVILLE-STUDIO-LTD/FlexyBillz_ReactNative.git && git config user.email kraneabel@gmail.com && git config user.name "Ayinla Abel" && git commit -am "[skip ci] update build number to: ${currentVersion.build}" && sleep 2 && git push`;
-  // const gitCommit = `git remote set-url origin https://github.com/DIGITAVILLE-STUDIO-LTD/FlexyBillz_ReactNative.git && git config user.email kraneabel@gmail.com && git config user.name "Ayinla Abel" && git commit -am "[skip ci] update build number to: 2" && sleep 2 && git push`;
+  // const gitCommit = `git remote set-url origin https://ayinlaabel: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@github.com/DIGITAVILLE-STUDIO-LTD/FlexyBillz_ReactNative.git && git config user.email kraneabel@gmail.com && git config user.name "Ayinla Abel" && git commit -am "[skip ci] update build number to: ${currentVersion.build}" && sleep 2 && git push`;
+  const gitCommit = `git remote set-url origin https://github.com/DIGITAVILLE-STUDIO-LTD/FlexyBillz_ReactNative.git && git config user.email kraneabel@gmail.com && git config user.name "Ayinla Abel" && git commit -am "[skip ci] update build number to: 2" && sleep 2 && git push`;
 
   console.log("committing the update with command:", gitCommit);
   exec(gitCommit, (error, stdout, stderr) => {
