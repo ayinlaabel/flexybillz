@@ -14,7 +14,9 @@ try {
   );
   console.log("Done:", response);
 
-  const gitCommit = `git config user.email kraneabel@gmail.com; git commit -am  "[skip ci] update build number to: ${currentVersion.build}"; sleep 2; git push`;
+  const gitCommit = `git config --global user.email kraneabel@gmail.com; git config --global user.name ${"Ayinla Abel"}; git commit -am  "[skip ci] update build number to: ${
+    currentVersion.build
+  }"; sleep 2; git push`;
   console.log("committing the update with command:", gitCommit);
   exec(gitCommit, (error, stdout, stderr) => {
     if (error !== null) {
