@@ -44,8 +44,6 @@ const Login = () => {
     goBack();
   };
 
-  
-
   const dispatch = useDispatch();
   const toast = useToast();
   // const handleChange = () => {};
@@ -78,6 +76,7 @@ const Login = () => {
           await storeData(appStateType.isLogin, "true");
           await storeData("user", JSON.stringify(userInfo.data));
           await storeData("firstName", data.data.firstName);
+          await storeData("token", data.data.token.token);
           await removeData(appStateType.isLogOut);
           replace("Dashboard");
         }
