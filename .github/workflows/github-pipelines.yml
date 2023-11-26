@@ -11,6 +11,9 @@ jobs:
   build:
     runs-on: ubuntu-latest
 
+    env:
+      EXPO_TOKEN: ${{ secrets.GITHUB_EXPO_TOKEN }}
+
     strategy:
       matrix:
         node-version: [16]
