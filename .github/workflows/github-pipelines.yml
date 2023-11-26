@@ -35,15 +35,18 @@ jobs:
         if: github.event_name == 'push' && github.ref == 'refs/heads/develop'
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GITHUB_EXPO_TOKEN: ${{ secrets.GITHUB_EXPO_TOKEN }}
 
       - name: Run CI for UAT
         run: npm run ci:uat
         if: github.event_name == 'push' && github.ref == 'refs/heads/uat'
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GITHUB_EXPO_TOKEN: ${{ secrets.GITHUB_EXPO_TOKEN }}
 
       - name: Run CI for Prod
         run: npm run ci:prod
         if: github.event_name == 'push' && github.ref == 'refs/heads/main'
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GITHUB_EXPO_TOKEN: ${{ secrets.GITHUB_EXPO_TOKEN }}
