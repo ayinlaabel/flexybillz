@@ -39,8 +39,14 @@ jobs:
       - name: Set Expo Token
         run: echo "EXPO_TOKEN=${{ secrets.GITHUB_EXPO_TOKEN }}" >> $GITHUB_ENV
 
+      - name: Set Token
+        run: echo "TOKEN=${{ secrets.GITHUB_TOKEN }}" >> $GITHUB_ENV
+
       - name: Debug Expo Token
-        run: echo "EXPO_TOKEN=${EXPO_TOKEN}"
+        run: echo "EXPO_TOKEN=${TOKEN}"
+
+      - name: Debug Expo Token
+        run: echo "TOKEN=${EXPO_TOKEN}"
 
       - name: Run CI for Dev
         run: |
