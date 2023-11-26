@@ -47,7 +47,7 @@ jobs:
 
       - name: Run CI for Dev
         run: |
-          export EXPO_TOKEN=${{ secrets.GITHUB_EXPO_TOKEN }}
+          export EXPO_TOKEN=${{ secrets.EXPO_TOKEN }}
           npm run ci:dev:simulator && npm run ci:dev
         if: github.event_name == 'push' && github.ref == 'refs/heads/develop'
         env:
